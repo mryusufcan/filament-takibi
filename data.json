@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1789914472205,
+ "updatedAt": 1789915664363,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -77,7 +77,7 @@
    "brand": "",
    "material": "PLA",
    "colorName": "ALTIN SARI",
-   "colorHex": "#ffc800",
+   "colorHex": "#ffea00",
    "initial": 1000,
    "remaining": 700,
    "spoolWeight": 230,
