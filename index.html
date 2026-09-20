@@ -92,6 +92,9 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 .cbar{height:20px;background:var(--track);border-radius:6px;overflow:hidden}
 .cbar b{display:block;height:100%;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
 .cval{text-align:right;font-size:13px;font-weight:600;white-space:nowrap}
+.chead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.chead h3{margin:0}
+.chead select{width:auto;padding:4px 8px;font-size:14px}
 .formacts{flex-wrap:wrap}
 #ghStat{text-align:center;margin-top:10px;font-size:13px;color:var(--muted);min-height:18px}
 #ghStat.err{color:var(--bad);cursor:pointer}
@@ -114,7 +117,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 
   <section class="charts" id="charts" style="display:none">
     <div class="chart"><h3>Malzemeye göre kalan</h3><div id="chMat"></div></div>
-    <div class="chart"><h3>Renge göre kalan</h3><div id="chColor"></div></div>
+    <div class="chart"><div class="chead"><h3>Renge göre kalan</h3><select id="chMatSel" aria-label="Malzeme filtresi"></select></div><div id="chColor"></div></div>
   </section>
 
   <div class="tools">
@@ -322,24 +325,42 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       host.appendChild(row);
     });
   }
+  var chartMat = 'Tümü';
   function renderCharts(){
     var sec = $('charts'), mats = {}, cols = {};
+    function toRows(o){
+      return Object.keys(o).map(function(k){ return o[k]; }).sort(function(a, b){ return b.total - a.total; });
+    }
     spools.forEach(function(s){
       if (s.remaining <= 0) return;
       var m = mats[s.material] || (mats[s.material] = { label: s.material, total: 0, count: 0 });
       m.total += s.remaining; m.count++;
+    });
+    var mRows = toRows(mats);
+    if (!mRows.length){ sec.style.display = 'none'; return; }
+    sec.style.display = '';
+
+    // renk grafiği için malzeme filtresi
+    var opts = ['Tümü'].concat(mRows.map(function(m){ return m.label; }));
+    if (opts.indexOf(chartMat) < 0) chartMat = 'Tümü';
+    var sel = $('chMatSel'), sig = opts.join('|');
+    if (sel.getAttribute('data-sig') !== sig){
+      sel.textContent = '';
+      opts.forEach(function(o){ var op = el('option', '', o); op.value = o; sel.appendChild(op); });
+      sel.setAttribute('data-sig', sig);
+    }
+    sel.value = chartMat;
+
+    spools.forEach(function(s){
+      if (s.remaining <= 0) return;
+      if (chartMat !== 'Tümü' && s.material !== chartMat) return;
       var name = (s.colorName || '').trim();
       var key = name.toLocaleLowerCase('tr') || '(adsiz)';
       var c = cols[key] || (cols[key] = { label: name || 'Adsız', total: 0, count: 0, hex: safeHex(s.colorHex), best: 0 });
       c.total += s.remaining; c.count++;
       if (s.remaining > c.best){ c.best = s.remaining; c.hex = safeHex(s.colorHex); }
     });
-    function toRows(o){
-      return Object.keys(o).map(function(k){ return o[k]; }).sort(function(a, b){ return b.total - a.total; });
-    }
-    var mRows = toRows(mats), cRows = toRows(cols);
-    if (!mRows.length){ sec.style.display = 'none'; return; }
-    sec.style.display = '';
+    var cRows = toRows(cols);
     if (cRows.length > 10){
       var rest = cRows.slice(9), t = 0, n = 0;
       rest.forEach(function(r){ t += r.total; n += r.count; });
@@ -353,6 +374,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       return { label: c.label, total: c.total, count: c.count, color: c.hex };
     }));
   }
+  $('chMatSel').onchange = function(){ chartMat = this.value; renderCharts(); };
 
   function card(s){
     var p = pctOf(s);
