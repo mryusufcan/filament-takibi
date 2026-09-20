@@ -2,7 +2,7 @@
 
 3D yazıcı filament stoğunu takip etmek için basit bir web arayüzü. Kurulum, sunucu veya hesap gerektirmez. Tek bir `index.html` dosyasıdır.
 
-**Canlı sayfa:** https://KULLANICI-ADIN.github.io/filament-takibi/
+**Canlı sayfa:** https://mryusufcan.github.io/filament-takibi/
 
 ## Özellikler
 
