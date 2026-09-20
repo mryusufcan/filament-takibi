@@ -95,6 +95,15 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 .chead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
 .chead h3{margin:0}
 .chead select{width:auto;padding:4px 8px;font-size:14px}
+.hist{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px 10px;box-shadow:var(--shadow)}
+.hist summary{cursor:pointer;padding:10px 0;font-weight:600}
+.hsum{color:var(--muted);font-size:13px;margin:0 0 8px}
+.hday{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:12px 0 4px}
+.hrow{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+.hrow i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(128,128,128,.4)}
+.hd{min-width:0}
+.hd small,.hv small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+.hv{font-weight:600;white-space:nowrap;text-align:right}
 .formacts{flex-wrap:wrap}
 #ghStat{text-align:center;margin-top:10px;font-size:13px;color:var(--muted);min-height:18px}
 #ghStat.err{color:var(--bad);cursor:pointer}
@@ -132,6 +141,11 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
   <div class="chips" id="chips"></div>
 
   <div class="grid" id="list"></div>
+  <details class="hist" id="hist">
+    <summary id="histSum">Geçmiş</summary>
+    <div id="histBody"></div>
+  </details>
+
   <div class="backup">
     <button type="button" class="small" id="exportBtn">⬇ Yedek indir (CSV)</button>
     <button type="button" class="small" id="importBtn">⬆ Yedekten yükle</button>
@@ -220,6 +234,20 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
   function fmt(n){ return (Math.round(n * 10) / 10).toString().replace('.', ','); }
   function safeHex(h){ return /^#[0-9a-fA-F]{6}$/.test(h) ? h : '#888888'; }
   function newId(){ return 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  var LOG_KINDS = { use: 1, weigh: 1, add: 1, edit: 1 };
+  function normLog(a){
+    if (!Array.isArray(a)) return [];
+    return a.filter(function(e){
+      return e && typeof e === 'object' && Object.prototype.hasOwnProperty.call(LOG_KINDS, e.k) &&
+             isFinite(e.t) && isFinite(e.g) && isFinite(e.r);
+    }).map(function(e){
+      return { t: +e.t, k: e.k, g: Math.round(+e.g * 10) / 10, r: Math.round(+e.r * 10) / 10 };
+    }).slice(-100);
+  }
+  function withLog(s, kind, grams, rem){
+    var log = (s.log || []).concat([{ t: Date.now(), k: kind, g: Math.round(grams * 10) / 10, r: Math.round(rem * 10) / 10 }]);
+    return Object.assign({}, s, { log: log.slice(-100) });
+  }
 
   /* ---------- storage ---------- */
   function lsLoad(){
@@ -231,7 +259,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
   }
   function body(s){
     return { brand:s.brand, material:s.material, colorName:s.colorName, colorHex:s.colorHex,
-             initial:s.initial, remaining:s.remaining, spoolWeight:s.spoolWeight || 0, price:s.price, note:s.note, createdAt:s.createdAt };
+             initial:s.initial, remaining:s.remaining, spoolWeight:s.spoolWeight || 0, price:s.price, note:s.note, createdAt:s.createdAt, log:s.log || [] };
   }
   function persist(fn){
     chain = chain.then(fn).catch(function(e){ console.error(e); toast('Kaydedilemedi, tekrar dene'); });
@@ -267,6 +295,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     $('stKg').textContent = fmt(total / 1000) + ' kg';
     $('stLow').textContent = low;
     renderCharts();
+    renderHistory();
 
     // chips
     var mats = ['Tümü'];
@@ -324,6 +353,55 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       row.appendChild(el('div', 'cval', fmtW(r.total)));
       host.appendChild(row);
     });
+  }
+  function dayKey(t){ var d = new Date(t); return d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(); }
+  function dayLabel(t){
+    var now = new Date(), d = new Date(t);
+    var a = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    var b = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    var diff = Math.round((a - b) / 86400000);
+    if (diff === 0) return 'Bugün';
+    if (diff === 1) return 'Dün';
+    var opt = { day: 'numeric', month: 'long' };
+    if (d.getFullYear() !== now.getFullYear()) opt.year = 'numeric';
+    return d.toLocaleDateString('tr-TR', opt);
+  }
+  function renderHistory(){
+    var all = [];
+    spools.forEach(function(s){ (s.log || []).forEach(function(e){ all.push({ e: e, s: s }); }); });
+    all.sort(function(a, b){ return b.e.t - a.e.t; });
+    $('histSum').textContent = 'Geçmiş' + (all.length ? ' (' + all.length + ')' : '');
+    var body = $('histBody'); body.textContent = '';
+    if (!all.length){
+      body.appendChild(el('div', 'hsum', 'Henüz kayıt yok. Filament düştüğünde veya makara eklediğinde burada görünür.'));
+      return;
+    }
+    var now = Date.now(), w7 = 0, w30 = 0;
+    all.forEach(function(x){
+      var e = x.e;
+      var used = e.k === 'use' ? e.g : (e.k === 'weigh' && e.g < 0 ? -e.g : 0);
+      if (now - e.t <= 7 * 86400000) w7 += used;
+      if (now - e.t <= 30 * 86400000) w30 += used;
+    });
+    body.appendChild(el('div', 'hsum', 'Kullanılan: son 7 gün ' + fmtW(w7) + ' · son 30 gün ' + fmtW(w30)));
+    var lastDay = '';
+    all.slice(0, 60).forEach(function(x){
+      var e = x.e, s = x.s, dk = dayKey(e.t);
+      if (dk !== lastDay){ body.appendChild(el('div', 'hday', dayLabel(e.t))); lastDay = dk; }
+      var row = el('div', 'hrow');
+      var dot = el('i'); dot.style.background = safeHex(s.colorHex);
+      var hd = el('div', 'hd');
+      hd.appendChild(document.createTextNode((s.colorName || 'Renksiz') + ' · ' + (s.brand ? s.brand + ' ' : '') + s.material));
+      var what = e.k === 'use' ? 'Kullanıldı' : e.k === 'weigh' ? 'Tartıdan güncellendi' : e.k === 'add' ? 'Makara eklendi' : 'Elle düzenlendi';
+      hd.appendChild(el('small', '', what));
+      var hv = el('div', 'hv');
+      var sign = e.k === 'use' ? '−' : (e.g < 0 ? '−' : '+');
+      hv.appendChild(document.createTextNode(sign + fmt(Math.abs(e.g)) + ' g'));
+      hv.appendChild(el('small', '', 'kalan ' + fmt(e.r) + ' g · ' + new Date(e.t).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })));
+      row.appendChild(dot); row.appendChild(hd); row.appendChild(hv);
+      body.appendChild(row);
+    });
+    if (all.length > 60) body.appendChild(el('div', 'hsum', 'Son 60 kayıt gösteriliyor.'));
   }
   var chartMat = 'Tümü';
   function renderCharts(){
@@ -411,8 +489,10 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     function doUse(){
       var g = num(inp.value, 0);
       if (g <= 0) return;
-      var n = Object.assign({}, s, { remaining: Math.max(0, Math.round((s.remaining - g) * 10) / 10) });
-      saveSpool(n);
+      var newRem = Math.max(0, Math.round((s.remaining - g) * 10) / 10);
+      var used = Math.round((s.remaining - newRem) * 10) / 10;
+      if (used <= 0) return;
+      saveSpool(withLog(Object.assign({}, s, { remaining: newRem }), 'use', used, newRem));
       if (!dbh) return;
       inp.value = '';
     }
@@ -427,7 +507,9 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       var gross = num(winp.value, -1);
       if (gross < 0) return;
       var rem = Math.max(0, Math.min(s.initial, Math.round((gross - tare) * 10) / 10));
-      saveSpool(Object.assign({}, s, { remaining: rem }));
+      var delta = Math.round((rem - s.remaining) * 10) / 10;
+      var ns = Object.assign({}, s, { remaining: rem });
+      saveSpool(delta !== 0 ? withLog(ns, 'weigh', delta, rem) : ns);
     }
     wb.onclick = doWeigh;
     winp.onkeydown = function(e){ if (e.key === 'Enter'){ e.preventDefault(); doWeigh(); } };
@@ -488,8 +570,11 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       spoolWeight: Math.max(0, num($('fTare').value, 0)),
       price: Math.max(0, num($('fPrice').value, 0)),
       note: $('fNote').value.trim(),
-      createdAt: old && old.createdAt ? old.createdAt : Date.now()
+      createdAt: old && old.createdAt ? old.createdAt : Date.now(),
+      log: old && old.log ? old.log : []
     };
+    if (!old) s = withLog(s, 'add', remaining, remaining);
+    else if (old.remaining !== remaining) s = withLog(s, 'edit', remaining - old.remaining, remaining);
     saveSpool(s);
     closeDlg();
   };
@@ -599,7 +684,8 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
         spoolWeight: Math.max(0, numTR(col(r, 'bos_makara_g'), 0)),
         price: Math.max(0, numTR(col(r, 'fiyat'), 0)),
         note: txt(col(r, 'not'), 200),
-        createdAt: old && old.createdAt ? old.createdAt : Date.now()
+        createdAt: old && old.createdAt ? old.createdAt : Date.now(),
+        log: old && old.log ? old.log : []
       });
       n++;
     });
@@ -688,7 +774,8 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       spoolWeight: Math.max(0, num(x.spoolWeight, 0)),
       price: Math.max(0, num(x.price, 0)),
       note: String(x.note || '').slice(0, 200),
-      createdAt: num(x.createdAt, 0)
+      createdAt: num(x.createdAt, 0),
+      log: normLog(x.log)
     };
   }
 
@@ -853,7 +940,8 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
             spoolWeight: num(x.spoolWeight, 0),
             price: num(x.price, 0),
             note: String(x.note || ''),
-            createdAt: num(x.createdAt, 0)
+            createdAt: num(x.createdAt, 0),
+            log: normLog(x.log)
           };
         });
         render();
