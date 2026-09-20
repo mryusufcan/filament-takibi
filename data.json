@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1789903588516,
+ "updatedAt": 1789903696101,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -83,7 +83,7 @@
   {
    "id": "smu9o4bntbw0y",
    "brand": "",
-   "material": "PLA+",
+   "material": "PLA",
    "colorName": "BEYAZ",
    "colorHex": "#ffffff",
    "initial": 200,
