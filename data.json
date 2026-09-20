@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1789903747190,
+ "updatedAt": 1789914472205,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -13,7 +13,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546427
+   "createdAt": 1789900546427,
+   "log": []
   },
   {
    "id": "smu9nv64fb0wy",
@@ -26,7 +27,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546428
+   "createdAt": 1789900546428,
+   "log": []
   },
   {
    "id": "smu9nvtftp1uy",
@@ -39,20 +41,22 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546428
+   "createdAt": 1789900546428,
+   "log": []
   },
   {
    "id": "smu9nwkt6ec9z",
    "brand": "",
    "material": "PLA",
    "colorName": "YAKUT",
-   "colorHex": "#8a1e1e",
+   "colorHex": "#c82536",
    "initial": 1000,
    "remaining": 897,
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546428
+   "createdAt": 1789900546428,
+   "log": []
   },
   {
    "id": "smu9o2pozwgvp",
@@ -65,7 +69,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546428
+   "createdAt": 1789900546428,
+   "log": []
   },
   {
    "id": "smu9o3mxe53o5",
@@ -78,7 +83,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546429
+   "createdAt": 1789900546429,
+   "log": []
   },
   {
    "id": "smu9o4bntbw0y",
@@ -91,7 +97,8 @@
    "spoolWeight": 50,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546429
+   "createdAt": 1789900546429,
+   "log": []
   },
   {
    "id": "smu9o5byn0exg",
@@ -104,7 +111,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546430
+   "createdAt": 1789900546430,
+   "log": []
   },
   {
    "id": "smu9o7a4ns4lt",
@@ -117,7 +125,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546430
+   "createdAt": 1789900546430,
+   "log": []
   },
   {
    "id": "smu9ocltcqcxc",
@@ -130,7 +139,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546430
+   "createdAt": 1789900546430,
+   "log": []
   },
   {
    "id": "smu9ode6susqv",
@@ -143,7 +153,8 @@
    "spoolWeight": 230,
    "price": 0,
    "note": "",
-   "createdAt": 1789900546431
+   "createdAt": 1789900546431,
+   "log": []
   }
  ]
 }
