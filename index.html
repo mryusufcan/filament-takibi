@@ -70,6 +70,8 @@ input[type=color]{padding:2px;height:40px;cursor:pointer}
 .use{display:flex;gap:8px}
 .use input{flex:1;min-width:0}
 .acts{display:flex;gap:8px;justify-content:flex-end}
+.toggle{width:100%;background:transparent;color:var(--muted)}
+.panel{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:10px}
 .note{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
 .empty{text-align:center;color:var(--muted);padding:40px 12px;border:1px dashed var(--line);border-radius:16px}
 footer{margin-top:24px;color:var(--muted);font-size:13px;text-align:center}
@@ -454,15 +456,16 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
   }
   $('chMatSel').onchange = function(){ chartMat = this.value; renderCharts(); };
 
+  var openIds = {};
   function card(s){
-    var p = pctOf(s);
+    var p = pctOf(s), tare = s.spoolWeight || 0;
     var c = el('div', 'card');
 
     var top = el('div', 'top');
     var sw = el('div', 'swatch'); sw.style.background = safeHex(s.colorHex);
     var t = el('div', 'ttl');
     t.appendChild(el('b', '', (s.brand ? s.brand + ' ' : '') + (s.colorName || 'Renksiz')));
-    t.appendChild(el('span', '', s.material + ' · ' + fmt(s.initial) + ' g' + (s.price ? ' · ' + fmt(s.price) + ' ₺' : '')));
+    t.appendChild(el('span', '', s.material + ' · ' + fmt(s.initial) + ' g'));
     top.appendChild(sw); top.appendChild(t);
     if (s.remaining <= 0) top.appendChild(el('span', 'badge', 'Bitti'));
     else if (p <= 20) top.appendChild(el('span', 'badge', 'Azaldı'));
@@ -474,14 +477,20 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 
     var nums = el('div', 'nums');
     var l = el('span'); var lb = el('b', '', fmt(s.remaining) + ' g'); l.appendChild(lb); l.appendChild(document.createTextNode(' kaldı'));
-    var tare = s.spoolWeight || 0;
     nums.appendChild(l); nums.appendChild(el('span', '', '%' + Math.round(p)));
     c.appendChild(nums);
-    if (tare > 0){
-      c.appendChild(el('div', 'note', 'Tartıda görünmesi gereken: ' + fmt(s.remaining + tare) + ' g (boş makara ' + fmt(tare) + ' g)'));
-    }
 
-    if (s.note) c.appendChild(el('div', 'note', s.note));
+    var open = !!openIds[s.id];
+    var tog = el('button', 'small toggle', open ? 'Kapat ▴' : 'İşlemler ▾');
+    tog.type = 'button';
+    tog.onclick = function(){ if (openIds[s.id]) delete openIds[s.id]; else openIds[s.id] = 1; render(); };
+    c.appendChild(tog);
+    if (!open) return c;
+
+    var panel = el('div', 'panel');
+    if (tare > 0) panel.appendChild(el('div', 'note', 'Tartıda görünmesi gereken: ' + fmt(s.remaining + tare) + ' g (boş makara ' + fmt(tare) + ' g)'));
+    if (s.price) panel.appendChild(el('div', 'note', 'Fiyat: ' + fmt(s.price) + ' ₺'));
+    if (s.note) panel.appendChild(el('div', 'note', s.note));
 
     var use = el('div', 'use');
     var inp = el('input'); inp.type = 'number'; inp.min = '0'; inp.step = '1'; inp.placeholder = 'Kullanılan g';
@@ -492,13 +501,13 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       var newRem = Math.max(0, Math.round((s.remaining - g) * 10) / 10);
       var used = Math.round((s.remaining - newRem) * 10) / 10;
       if (used <= 0) return;
+      delete openIds[s.id];
       saveSpool(withLog(Object.assign({}, s, { remaining: newRem }), 'use', used, newRem));
-      if (!dbh) return;
-      inp.value = '';
+      if (dbh) render();
     }
     ub.onclick = doUse;
     inp.onkeydown = function(e){ if (e.key === 'Enter'){ e.preventDefault(); doUse(); } };
-    use.appendChild(inp); use.appendChild(ub); c.appendChild(use);
+    use.appendChild(inp); use.appendChild(ub); panel.appendChild(use);
 
     var weigh = el('div', 'use');
     var winp = el('input'); winp.type = 'number'; winp.min = '0'; winp.step = '1'; winp.placeholder = 'Tartı: makara dahil g';
@@ -509,11 +518,13 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       var rem = Math.max(0, Math.min(s.initial, Math.round((gross - tare) * 10) / 10));
       var delta = Math.round((rem - s.remaining) * 10) / 10;
       var ns = Object.assign({}, s, { remaining: rem });
+      delete openIds[s.id];
       saveSpool(delta !== 0 ? withLog(ns, 'weigh', delta, rem) : ns);
+      if (dbh) render();
     }
     wb.onclick = doWeigh;
     winp.onkeydown = function(e){ if (e.key === 'Enter'){ e.preventDefault(); doWeigh(); } };
-    weigh.appendChild(winp); weigh.appendChild(wb); c.appendChild(weigh);
+    weigh.appendChild(winp); weigh.appendChild(wb); panel.appendChild(weigh);
 
     var acts = el('div', 'acts');
     var eb = el('button', 'small', 'Düzenle'); eb.type = 'button';
@@ -524,9 +535,10 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       if (!armed){
         armed = true; db_.textContent = 'Emin misin?';
         setTimeout(function(){ armed = false; db_.textContent = 'Sil'; }, 3000);
-      } else { removeSpool(s.id); }
+      } else { delete openIds[s.id]; removeSpool(s.id); }
     };
-    acts.appendChild(eb); acts.appendChild(db_); c.appendChild(acts);
+    acts.appendChild(eb); acts.appendChild(db_); panel.appendChild(acts);
+    c.appendChild(panel);
     return c;
   }
 
