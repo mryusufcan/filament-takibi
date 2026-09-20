@@ -111,6 +111,31 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 #ghStat.err{color:var(--bad);cursor:pointer}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--text);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:14px;display:none;z-index:10}
 @media (max-width:480px){.stat b{font-size:20px}}
+
+/* sadeleştirme */
+.card{padding:16px;gap:12px}
+.swatch{width:48px;height:48px}
+.ttl b{font-size:18px}
+.nums{align-items:baseline}
+.nums b{font-size:24px}
+.nums span:last-child{font-size:15px}
+button{min-height:42px}
+button.small{padding:8px 12px;min-height:40px}
+input,select,textarea{min-height:42px}
+.toggle{min-height:44px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.quick{display:flex;gap:6px;flex-wrap:wrap}
+.quick button{padding:6px 12px;min-height:36px;font-size:14px}
+.hint{font-size:12px;font-weight:400;color:var(--muted)}
+details.adv{border:1px solid var(--line);border-radius:12px;padding:0 12px}
+details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--text);font-size:14px}
+.advbody{display:flex;flex-direction:column;gap:12px;padding-bottom:12px}
+.hist.fold{margin:0 0 16px}
+.hist .charts{margin:0 0 8px}
+.onboard{grid-column:1 / -1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.onboard h2{margin:0 0 10px;font-size:18px}
+.onboard ol{margin:0 0 14px;padding-left:20px;color:var(--muted)}
+.onboard li{margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -126,10 +151,13 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     <div class="stat"><b id="stLow">0</b><span>Azalan (%20 altı)</span></div>
   </section>
 
-  <section class="charts" id="charts" style="display:none">
+  <details class="hist fold" id="chartsWrap" style="display:none">
+    <summary>Grafikler</summary>
+  <section class="charts" id="charts">
     <div class="chart"><h3>Malzemeye göre kalan</h3><div id="chMat"></div></div>
     <div class="chart"><div class="chead"><h3>Renge göre kalan</h3><select id="chMatSel" aria-label="Malzeme filtresi"></select></div><div id="chColor"></div></div>
   </section>
+  </details>
 
   <div class="tools">
     <input class="search" id="q" type="search" placeholder="Ara: marka, renk, malzeme…">
@@ -174,15 +202,20 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       <label>Renk adı<input id="fColor" placeholder="ör. Siyah" maxlength="40"></label>
       <label>Renk<input id="fHex" type="color" value="#333333"></label>
     </div>
-    <div class="row">
-      <label>Filament ağırlığı (g)<input id="fInit" type="number" min="1" step="1" value="1000"></label>
-      <label>Kalan filament (g)<input id="fRem" type="number" min="0" step="1" placeholder="boşsa dolu"></label>
-    </div>
-    <div class="row">
-      <label>Boş makara (g)<input id="fTare" type="number" min="0" step="1" value="200"></label>
-      <label>Fiyat (₺, isteğe bağlı)<input id="fPrice" type="number" min="0" step="1"></label>
-    </div>
-    <label>Not (isteğe bağlı)<textarea id="fNote" rows="2" maxlength="200"></textarea></label>
+    <details class="adv" id="fAdv">
+      <summary>Gelişmiş (ağırlık, fiyat, not)</summary>
+      <div class="advbody">
+        <div class="row">
+          <label>Makaradaki filament (g)<input id="fInit" type="number" min="1" step="1" value="1000"><span class="hint">Yeni makarada genelde 1000.</span></label>
+          <label>Şu an kalan (g)<input id="fRem" type="number" min="0" step="1" placeholder="boşsa dolu"><span class="hint">Boş bırakırsan dolu sayılır.</span></label>
+        </div>
+        <div class="row">
+          <label>Boş makara (g)<input id="fTare" type="number" min="0" step="1" value="200"><span class="hint">Tartıdan hesaplamak için. Genelde 150-250.</span></label>
+          <label>Fiyat (₺)<input id="fPrice" type="number" min="0" step="1"><span class="hint">İsteğe bağlı.</span></label>
+        </div>
+        <label>Not<textarea id="fNote" rows="2" maxlength="200"></textarea><span class="hint">İsteğe bağlı.</span></label>
+      </div>
+    </details>
     <div class="formacts">
       <button type="button" id="cancelBtn">Vazgeç</button>
       <button type="submit" class="primary">Kaydet</button>
@@ -329,10 +362,15 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     });
 
     var list = $('list'); list.textContent = '';
+    document.querySelector('.stats').style.display = spools.length ? '' : 'none';
+    document.querySelector('.tools').style.display = spools.length ? '' : 'none';
     if (!view.length){
-      var em = el('div', 'empty', spools.length ? 'Sonuç yok.' : 'Henüz makara yok. “+ Yeni makara” ile ilkini ekle.');
-      em.style.gridColumn = '1 / -1';
-      list.appendChild(em);
+      if (!spools.length) list.appendChild(onboardEl());
+      else {
+        var em = el('div', 'empty', 'Sonuç yok.');
+        em.style.gridColumn = '1 / -1';
+        list.appendChild(em);
+      }
     }
     view.forEach(function(s){ list.appendChild(card(s)); });
   }
@@ -407,7 +445,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
   }
   var chartMat = 'Tümü';
   function renderCharts(){
-    var sec = $('charts'), mats = {}, cols = {};
+    var sec = $('chartsWrap'), mats = {}, cols = {};
     function toRows(o){
       return Object.keys(o).map(function(k){ return o[k]; }).sort(function(a, b){ return b.total - a.total; });
     }
@@ -456,6 +494,21 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
   }
   $('chMatSel').onchange = function(){ chartMat = this.value; renderCharts(); };
 
+  function onboardEl(){
+    var b = el('div', 'onboard');
+    b.appendChild(el('h2', '', 'Başlamak için 3 adım'));
+    var ol = el('ol');
+    [
+      '“+ Yeni makara” ile makaranı ekle. Marka, malzeme ve renk yeterli.',
+      'Baskıdan sonra makara kartında “İşlemler”e bas, kullandığın gramı yaz ve “Kullandım”a bas.',
+      'Filament azalınca kartta “Azaldı” uyarısı çıkar.'
+    ].forEach(function(t){ ol.appendChild(el('li', '', t)); });
+    b.appendChild(ol);
+    var btn = el('button', 'primary', '+ İlk makarayı ekle'); btn.type = 'button';
+    btn.onclick = function(){ openDlg(null); };
+    b.appendChild(btn);
+    return b;
+  }
   var openIds = {};
   function card(s){
     var p = pctOf(s), tare = s.spoolWeight || 0;
@@ -464,8 +517,8 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     var top = el('div', 'top');
     var sw = el('div', 'swatch'); sw.style.background = safeHex(s.colorHex);
     var t = el('div', 'ttl');
-    t.appendChild(el('b', '', (s.brand ? s.brand + ' ' : '') + (s.colorName || 'Renksiz')));
-    t.appendChild(el('span', '', s.material + ' · ' + fmt(s.initial) + ' g'));
+    t.appendChild(el('b', '', s.colorName || 'Renksiz'));
+    t.appendChild(el('span', '', (s.brand ? s.brand + ' · ' : '') + s.material + ' · ' + fmt(s.initial) + ' g'));
     top.appendChild(sw); top.appendChild(t);
     if (s.remaining <= 0) top.appendChild(el('span', 'badge', 'Bitti'));
     else if (p <= 20) top.appendChild(el('span', 'badge', 'Azaldı'));
@@ -493,8 +546,8 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     if (s.note) panel.appendChild(el('div', 'note', s.note));
 
     var use = el('div', 'use');
-    var inp = el('input'); inp.type = 'number'; inp.min = '0'; inp.step = '1'; inp.placeholder = 'Kullanılan g';
-    var ub = el('button', 'small', 'Düş'); ub.type = 'button';
+    var inp = el('input'); inp.type = 'number'; inp.min = '0'; inp.step = '1'; inp.placeholder = 'Kullandığım gram';
+    var ub = el('button', 'small', 'Kullandım'); ub.type = 'button';
     function doUse(){
       var g = num(inp.value, 0);
       if (g <= 0) return;
@@ -507,11 +560,19 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     }
     ub.onclick = doUse;
     inp.onkeydown = function(e){ if (e.key === 'Enter'){ e.preventDefault(); doUse(); } };
+    panel.appendChild(el('div', 'hint', 'Kullandığın gramı yaz veya hızlı düğmelere bas:'));
+    var quick = el('div', 'quick');
+    [10, 25, 50, 100].forEach(function(q){
+      var qb = el('button', '', '+' + q + ' g'); qb.type = 'button';
+      qb.onclick = function(){ inp.value = Math.round((num(inp.value, 0) + q) * 10) / 10; };
+      quick.appendChild(qb);
+    });
+    panel.appendChild(quick);
     use.appendChild(inp); use.appendChild(ub); panel.appendChild(use);
 
     var weigh = el('div', 'use');
-    var winp = el('input'); winp.type = 'number'; winp.min = '0'; winp.step = '1'; winp.placeholder = 'Tartı: makara dahil g';
-    var wb = el('button', 'small', 'Hesapla'); wb.type = 'button';
+    var winp = el('input'); winp.type = 'number'; winp.min = '0'; winp.step = '1'; winp.placeholder = 'Tartıdaki toplam (makara dahil)';
+    var wb = el('button', 'small', 'Tartıdan güncelle'); wb.type = 'button';
     function doWeigh(){
       var gross = num(winp.value, -1);
       if (gross < 0) return;
@@ -524,6 +585,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     }
     wb.onclick = doWeigh;
     winp.onkeydown = function(e){ if (e.key === 'Enter'){ e.preventDefault(); doWeigh(); } };
+    panel.appendChild(el('div', 'hint', 'Ya da makarayı tartıp toplam ağırlığı yaz (makara dahil):'));
     weigh.appendChild(winp); weigh.appendChild(wb); panel.appendChild(weigh);
 
     var acts = el('div', 'acts');
@@ -555,6 +617,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     $('fTare').value = s ? (s.spoolWeight || 0) : 200;
     $('fPrice').value = s && s.price ? s.price : '';
     $('fNote').value = s ? s.note : '';
+    $('fAdv').open = !!s;
     var d = $('dlg');
     if (d.showModal) d.showModal(); else d.setAttribute('open', '');
   }
