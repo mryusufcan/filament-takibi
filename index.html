@@ -83,6 +83,15 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 .row3{display:grid;grid-template-columns:1fr 90px;gap:10px}
 .formacts{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
 .backup{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+@media (max-width:640px){.charts{grid-template-columns:1fr}}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+.chart h3{margin:0 0 10px;font-size:15px}
+.crow{display:grid;grid-template-columns:92px 1fr 64px;gap:8px;align-items:center;margin-bottom:8px;font-size:14px}
+.cname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cbar{height:20px;background:var(--track);border-radius:6px;overflow:hidden}
+.cbar b{display:block;height:100%;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
+.cval{text-align:right;font-size:13px;font-weight:600;white-space:nowrap}
 .formacts{flex-wrap:wrap}
 #ghStat{text-align:center;margin-top:10px;font-size:13px;color:var(--muted);min-height:18px}
 #ghStat.err{color:var(--bad);cursor:pointer}
@@ -101,6 +110,11 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     <div class="stat"><b id="stCount">0</b><span>Makara</span></div>
     <div class="stat"><b id="stKg">0 kg</b><span>Toplam kalan</span></div>
     <div class="stat"><b id="stLow">0</b><span>Azalan (%20 altı)</span></div>
+  </section>
+
+  <section class="charts" id="charts" style="display:none">
+    <div class="chart"><h3>Malzemeye göre kalan</h3><div id="chMat"></div></div>
+    <div class="chart"><h3>Renge göre kalan</h3><div id="chColor"></div></div>
   </section>
 
   <div class="tools">
@@ -249,6 +263,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
     $('stCount').textContent = spools.length;
     $('stKg').textContent = fmt(total / 1000) + ' kg';
     $('stLow').textContent = low;
+    renderCharts();
 
     // chips
     var mats = ['Tümü'];
@@ -286,6 +301,57 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
       list.appendChild(em);
     }
     view.forEach(function(s){ list.appendChild(card(s)); });
+  }
+
+  var PAL = ['#d9541e','#2f7fd9','#2f9e5b','#8a5cd6','#d99a12','#d6457a','#3aa6a6','#7a6a55'];
+  function fmtW(g){ return g >= 1000 ? fmt(g / 1000) + ' kg' : fmt(g) + ' g'; }
+  function drawBars(host, rows){
+    host.textContent = '';
+    var max = 0;
+    rows.forEach(function(r){ if (r.total > max) max = r.total; });
+    rows.forEach(function(r){
+      var row = el('div', 'crow');
+      row.title = r.label + ': ' + fmtW(r.total) + ' (' + r.count + ' makara)';
+      row.appendChild(el('div', 'cname', r.label));
+      var bar = el('div', 'cbar'), f = el('b');
+      f.style.width = (max > 0 ? Math.max(3, r.total / max * 100) : 0) + '%';
+      f.style.background = r.color;
+      bar.appendChild(f);
+      row.appendChild(bar);
+      row.appendChild(el('div', 'cval', fmtW(r.total)));
+      host.appendChild(row);
+    });
+  }
+  function renderCharts(){
+    var sec = $('charts'), mats = {}, cols = {};
+    spools.forEach(function(s){
+      if (s.remaining <= 0) return;
+      var m = mats[s.material] || (mats[s.material] = { label: s.material, total: 0, count: 0 });
+      m.total += s.remaining; m.count++;
+      var name = (s.colorName || '').trim();
+      var key = name.toLocaleLowerCase('tr') || '(adsiz)';
+      var c = cols[key] || (cols[key] = { label: name || 'Adsız', total: 0, count: 0, hex: safeHex(s.colorHex), best: 0 });
+      c.total += s.remaining; c.count++;
+      if (s.remaining > c.best){ c.best = s.remaining; c.hex = safeHex(s.colorHex); }
+    });
+    function toRows(o){
+      return Object.keys(o).map(function(k){ return o[k]; }).sort(function(a, b){ return b.total - a.total; });
+    }
+    var mRows = toRows(mats), cRows = toRows(cols);
+    if (!mRows.length){ sec.style.display = 'none'; return; }
+    sec.style.display = '';
+    if (cRows.length > 10){
+      var rest = cRows.slice(9), t = 0, n = 0;
+      rest.forEach(function(r){ t += r.total; n += r.count; });
+      cRows = cRows.slice(0, 9);
+      cRows.push({ label: 'Diğer renkler', total: t, count: n, hex: '#9a9890' });
+    }
+    drawBars($('chMat'), mRows.map(function(m, i){
+      return { label: m.label, total: m.total, count: m.count, color: PAL[i % PAL.length] };
+    }));
+    drawBars($('chColor'), cRows.map(function(c){
+      return { label: c.label, total: c.total, count: c.count, color: c.hex };
+    }));
   }
 
   function card(s){
