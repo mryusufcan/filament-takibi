@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1789903731503,
+ "updatedAt": 1789903747190,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -84,7 +84,7 @@
    "id": "smu9o4bntbw0y",
    "brand": "",
    "material": "PLA",
-   "colorName": "HYPER BEYAZ",
+   "colorName": "CR-BEYAZ",
    "colorHex": "#ffffff",
    "initial": 200,
    "remaining": 150,
