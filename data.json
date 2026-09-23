@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1789929961180,
+ "updatedAt": 1790184666858,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -169,12 +169,19 @@
    "colorName": "SİYAH",
    "colorHex": "#000000",
    "initial": 1000,
-   "remaining": 1000,
+   "remaining": 774,
    "spoolWeight": 230,
    "price": 0,
    "note": "",
    "createdAt": 1789900546431,
-   "log": []
+   "log": [
+    {
+     "t": 1790184665649,
+     "k": "weigh",
+     "g": -226,
+     "r": 774
+    }
+   ]
   }
  ]
 }
