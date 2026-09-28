@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Filament Takibi</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2064%2064%27%3E%3Crect%20width=%2764%27%20height=%2764%27%20rx=%2714%27%20fill=%27%23d9541e%27/%3E%3Ccircle%20cx=%2732%27%20cy=%2732%27%20r=%2720%27%20fill=%27none%27%20stroke=%27%23ffffff%27%20stroke-width=%276%27/%3E%3Ccircle%20cx=%2732%27%20cy=%2732%27%20r=%276%27%20fill=%27%23ffffff%27/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#f6f5f2; --card:#ffffff; --text:#1d1d1b; --muted:#6b6a65; --line:#e4e2dc;
@@ -98,6 +97,12 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 .chead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
 .chead h3{margin:0}
 .chead select{width:auto;padding:4px 8px;font-size:14px}
+.cbar.stack{display:flex}
+.cbar .seg{flex:none;border-radius:0;box-shadow:inset -1px 0 0 rgba(128,128,128,.45)}
+.mrow .crow{margin-bottom:4px}
+.mleg{display:flex;flex-wrap:wrap;gap:2px 10px;margin:0 0 12px 100px;font-size:12px;color:var(--muted)}
+.litem{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.litem i{width:9px;height:9px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(128,128,128,.5)}
 .hist{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px 10px;box-shadow:var(--shadow)}
 .hist summary{cursor:pointer;padding:10px 0;font-weight:600}
 .hsum{color:var(--muted);font-size:13px;margin:0 0 8px}
@@ -107,9 +112,6 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 .hd{min-width:0}
 .hd small,.hv small{display:block;color:var(--muted);font-size:12px;font-weight:400}
 .hv{font-weight:600;white-space:nowrap;text-align:right}
-.formacts{flex-wrap:wrap}
-#ghStat{text-align:center;margin-top:10px;font-size:13px;color:var(--muted);min-height:18px}
-#ghStat.err{color:var(--bad);cursor:pointer}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--text);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:14px;display:none;z-index:10}
 @media (max-width:480px){.stat b{font-size:20px}}
 
@@ -137,6 +139,22 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
 .onboard h2{margin:0 0 10px;font-size:18px}
 .onboard ol{margin:0 0 14px;padding-left:20px;color:var(--muted)}
 .onboard li{margin-bottom:6px}
+
+.charts{grid-template-columns:1fr}
+.mgroup{margin-bottom:18px}
+.mgroup:last-child{margin-bottom:4px}
+.mhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:1px solid var(--line);padding-bottom:4px;margin-bottom:8px}
+.mhead b{font-size:16px}
+.mhead span{color:var(--muted);font-size:13px}
+
+.slist{display:flex;flex-direction:column}
+.srow{display:flex;justify-content:space-between;align-items:center;width:100%;background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;padding:10px 2px;min-height:44px;font-size:15px;text-align:left}
+.srow:hover{border-color:var(--line);background:transparent}
+.snm{color:var(--muted)}
+.sv{font-weight:600}
+.sv.low{color:var(--bad)}
+.sv em{font-style:normal;color:var(--muted);font-weight:400}
+.slist .panel{border-top:0;padding:4px 2px 12px}
 </style>
 </head>
 <body>
@@ -156,7 +174,6 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     <summary>Grafikler</summary>
   <section class="charts" id="charts">
     <div class="chart"><h3>Malzemeye göre kalan</h3><div id="chMat"></div></div>
-    <div class="chart"><div class="chead"><h3>Renge göre kalan</h3><select id="chMatSel" aria-label="Malzeme filtresi"></select></div><div id="chColor"></div></div>
   </section>
   </details>
 
@@ -181,9 +198,7 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     <button type="button" class="small" id="exportBtn">⬇ Yedek indir (CSV)</button>
     <button type="button" class="small" id="importBtn">⬆ Yedekten yükle</button>
     <input type="file" id="importFile" accept=".csv,text/csv,text/plain" hidden>
-    <button type="button" class="small" id="ghBtn" style="display:none">☁ GitHub'a bağla</button>
   </div>
-  <div id="ghStat"></div>
   <footer id="foot"></footer>
 </div>
 
@@ -223,26 +238,6 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     </div>
   </form>
 </dialog>
-<dialog id="ghDlg">
-  <form id="ghForm" method="dialog">
-    <h2>GitHub'a bağla</h2>
-    <div class="note">Liste, bu depodaki dosyaya kaydedilir. Token yalnızca bu tarayıcıda saklanır.</div>
-    <div class="row">
-      <label>GitHub kullanıcı adı<input id="gOwner" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
-      <label>Veri deposu adı<input id="gRepo" placeholder="filament-veri" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
-    </div>
-    <label>Token (fine-grained)<input id="gToken" type="password" autocomplete="off" spellcheck="false"></label>
-    <div class="row">
-      <label>Dal (branch)<input id="gBranch" value="main" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
-      <label>Dosya<input id="gPath" value="data.json" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
-    </div>
-    <div class="formacts">
-      <button type="button" class="danger" id="gOff">Bağlantıyı kaldır</button>
-      <button type="button" id="gCancel">Vazgeç</button>
-      <button type="submit" class="primary">Bağlan</button>
-    </div>
-  </form>
-</dialog>
 <div id="toast"></div>
 
 <script>
@@ -253,7 +248,6 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
   var filterMat = 'Tümü';
   var editingId = null;
   var chain = Promise.resolve();
-  var gh = null;
 
   function $(id){ return document.getElementById(id); }
   function el(tag, cls, text){
@@ -307,7 +301,6 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
       var i = spools.findIndex(function(x){ return x.id === s.id; });
       if (i >= 0) spools[i] = s; else spools.push(s);
       lsSave(); render();
-      if (gh) ghQueue();
     }
   }
   function removeSpool(id){
@@ -316,7 +309,6 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     } else {
       spools = spools.filter(function(x){ return x.id !== id; });
       lsSave(); render();
-      if (gh) ghQueue();
     }
   }
 
@@ -355,12 +347,32 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
       return (s.brand + ' ' + s.colorName + ' ' + s.material + ' ' + s.note).toLowerCase().indexOf(q) >= 0;
     });
     var mode = $('sort').value;
-    view.sort(function(a, b){
-      if (mode === 'low') return a.remaining - b.remaining;
-      if (mode === 'high') return b.remaining - a.remaining;
-      if (mode === 'mat') return a.material.localeCompare(b.material, 'tr') || a.colorName.localeCompare(b.colorName, 'tr');
-      return (b.createdAt || 0) - (a.createdAt || 0);
+    var gmap = {}, groups = [];
+    view.forEach(function(s){
+      var key = s.material + '|' + ((s.colorName || '').trim().toLocaleLowerCase('tr') || '(adsiz)');
+      var g = gmap[key];
+      if (!g){ g = gmap[key] = { material: s.material, colorName: (s.colorName || '').trim(), spools: [] }; groups.push(g); }
+      g.spools.push(s);
     });
+    groups.forEach(function(g){
+      g.spools.sort(function(a, b){ return (a.createdAt || 0) - (b.createdAt || 0) || (a.id < b.id ? -1 : 1); });
+      g.total = 0; g.initial = 0; g.newest = 0;
+      var big = g.spools[0];
+      g.spools.forEach(function(s){
+        g.total += s.remaining; g.initial += s.initial;
+        if ((s.createdAt || 0) > g.newest) g.newest = s.createdAt || 0;
+        if (s.remaining > big.remaining) big = s;
+      });
+      g.total = Math.round(g.total * 10) / 10;
+      g.colorHex = safeHex(big.colorHex);
+    });
+    groups.sort(function(a, b){
+      if (mode === 'low') return a.total - b.total;
+      if (mode === 'high') return b.total - a.total;
+      if (mode === 'mat') return a.material.localeCompare(b.material, 'tr') || a.colorName.localeCompare(b.colorName, 'tr');
+      return b.newest - a.newest;
+    });
+    view = groups;
 
     var list = $('list'); list.textContent = '';
     document.querySelector('.stats').style.display = spools.length ? '' : 'none';
@@ -445,55 +457,54 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     if (all.length > 60) body.appendChild(el('div', 'hsum', 'Son 60 kayıt gösteriliyor.'));
   }
   var chartMat = 'Tümü';
+  function drawGrouped(host, groups, max){
+    host.textContent = '';
+    groups.forEach(function(g){
+      var box = el('div', 'mgroup');
+      var head = el('div', 'mhead');
+      head.appendChild(el('b', '', g.label));
+      head.appendChild(el('span', '', fmtW(g.total) + ' · ' + g.count + ' makara'));
+      box.appendChild(head);
+      g.parts.forEach(function(p){
+        var row = el('div', 'crow');
+        row.title = p.label + ': ' + fmtW(p.total);
+        row.appendChild(el('div', 'cname', p.label));
+        var bar = el('div', 'cbar'), f = el('b');
+        f.style.width = (max > 0 ? Math.max(3, p.total / max * 100) : 0) + '%';
+        f.style.background = p.hex;
+        bar.appendChild(f);
+        row.appendChild(bar);
+        row.appendChild(el('div', 'cval', fmtW(p.total)));
+        box.appendChild(row);
+      });
+      host.appendChild(box);
+    });
+  }
   function renderCharts(){
-    var sec = $('chartsWrap'), mats = {}, cols = {};
+    var sec = $('chartsWrap'), mats = {};
     function toRows(o){
       return Object.keys(o).map(function(k){ return o[k]; }).sort(function(a, b){ return b.total - a.total; });
     }
     spools.forEach(function(s){
       if (s.remaining <= 0) return;
-      var m = mats[s.material] || (mats[s.material] = { label: s.material, total: 0, count: 0 });
+      var m = mats[s.material] || (mats[s.material] = { label: s.material, total: 0, count: 0, cols: {} });
       m.total += s.remaining; m.count++;
+      var cn = (s.colorName || '').trim();
+      var ck = cn.toLocaleLowerCase('tr') || '(adsiz)';
+      var pc = m.cols[ck] || (m.cols[ck] = { label: cn || 'Adsız', total: 0, hex: safeHex(s.colorHex), best: 0 });
+      pc.total += s.remaining;
+      if (s.remaining > pc.best){ pc.best = s.remaining; pc.hex = safeHex(s.colorHex); }
     });
     var mRows = toRows(mats);
     if (!mRows.length){ sec.style.display = 'none'; return; }
     sec.style.display = '';
-
-    // renk grafiği için malzeme filtresi
-    var opts = ['Tümü'].concat(mRows.map(function(m){ return m.label; }));
-    if (opts.indexOf(chartMat) < 0) chartMat = 'Tümü';
-    var sel = $('chMatSel'), sig = opts.join('|');
-    if (sel.getAttribute('data-sig') !== sig){
-      sel.textContent = '';
-      opts.forEach(function(o){ var op = el('option', '', o); op.value = o; sel.appendChild(op); });
-      sel.setAttribute('data-sig', sig);
-    }
-    sel.value = chartMat;
-
-    spools.forEach(function(s){
-      if (s.remaining <= 0) return;
-      if (chartMat !== 'Tümü' && s.material !== chartMat) return;
-      var name = (s.colorName || '').trim();
-      var key = name.toLocaleLowerCase('tr') || '(adsiz)';
-      var c = cols[key] || (cols[key] = { label: name || 'Adsız', total: 0, count: 0, hex: safeHex(s.colorHex), best: 0 });
-      c.total += s.remaining; c.count++;
-      if (s.remaining > c.best){ c.best = s.remaining; c.hex = safeHex(s.colorHex); }
+    var max = 0;
+    mRows.forEach(function(m){
+      m.parts = toRows(m.cols);
+      m.parts.forEach(function(p){ if (p.total > max) max = p.total; });
     });
-    var cRows = toRows(cols);
-    if (cRows.length > 10){
-      var rest = cRows.slice(9), t = 0, n = 0;
-      rest.forEach(function(r){ t += r.total; n += r.count; });
-      cRows = cRows.slice(0, 9);
-      cRows.push({ label: 'Diğer renkler', total: t, count: n, hex: '#9a9890' });
-    }
-    drawBars($('chMat'), mRows.map(function(m, i){
-      return { label: m.label, total: m.total, count: m.count, color: PAL[i % PAL.length] };
-    }));
-    drawBars($('chColor'), cRows.map(function(c){
-      return { label: c.label, total: c.total, count: c.count, color: c.hex };
-    }));
+    drawGrouped($('chMat'), mRows, max);
   }
-  $('chMatSel').onchange = function(){ chartMat = this.value; renderCharts(); };
 
   function onboardEl(){
     var b = el('div', 'onboard');
@@ -511,37 +522,10 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     return b;
   }
   var openIds = {};
-  function card(s){
-    var p = pctOf(s), tare = s.spoolWeight || 0;
-    var c = el('div', 'card');
-
-    var top = el('div', 'top');
-    var sw = el('div', 'swatch'); sw.style.background = safeHex(s.colorHex);
-    var t = el('div', 'ttl');
-    t.appendChild(el('b', '', s.colorName || 'Renksiz'));
-    t.appendChild(el('span', '', (s.brand ? s.brand + ' · ' : '') + s.material + ' · ' + fmt(s.initial) + ' g'));
-    top.appendChild(sw); top.appendChild(t);
-    if (s.remaining <= 0) top.appendChild(el('span', 'badge', 'Bitti'));
-    else if (p <= 20) top.appendChild(el('span', 'badge', 'Azaldı'));
-    c.appendChild(top);
-
-    var bar = el('div', 'bar'); var fill = el('i');
-    fill.style.width = p + '%'; fill.style.background = barColor(p);
-    bar.appendChild(fill); c.appendChild(bar);
-
-    var nums = el('div', 'nums');
-    var l = el('span'); var lb = el('b', '', fmt(s.remaining) + ' g'); l.appendChild(lb); l.appendChild(document.createTextNode(' kaldı'));
-    nums.appendChild(l); nums.appendChild(el('span', '', '%' + Math.round(p)));
-    c.appendChild(nums);
-
-    var open = !!openIds[s.id];
-    var tog = el('button', 'small toggle', open ? 'Kapat ▴' : 'İşlemler ▾');
-    tog.type = 'button';
-    tog.onclick = function(){ if (openIds[s.id]) delete openIds[s.id]; else openIds[s.id] = 1; render(); };
-    c.appendChild(tog);
-    if (!open) return c;
-
+  function spoolPanel(s){
+    var tare = s.spoolWeight || 0;
     var panel = el('div', 'panel');
+    panel.appendChild(el('div', 'note', (s.brand ? s.brand + ' · ' : '') + 'Makara ' + fmt(s.initial) + ' g · kalan ' + fmt(s.remaining) + ' g'));
     if (tare > 0) panel.appendChild(el('div', 'note', 'Tartıda görünmesi gereken: ' + fmt(s.remaining + tare) + ' g (boş makara ' + fmt(tare) + ' g)'));
     if (s.price) panel.appendChild(el('div', 'note', 'Fiyat: ' + fmt(s.price) + ' ₺'));
     if (s.note) panel.appendChild(el('div', 'note', s.note));
@@ -601,7 +585,58 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
       } else { delete openIds[s.id]; removeSpool(s.id); }
     };
     acts.appendChild(eb); acts.appendChild(db_); panel.appendChild(acts);
-    c.appendChild(panel);
+    return panel;
+  }
+
+  function card(g){
+    var multi = g.spools.length > 1, one = g.spools[0];
+    var p = g.initial > 0 ? Math.max(0, Math.min(100, g.total / g.initial * 100)) : 0;
+    var c = el('div', 'card');
+
+    var top = el('div', 'top');
+    var sw = el('div', 'swatch'); sw.style.background = g.colorHex;
+    var t = el('div', 'ttl');
+    t.appendChild(el('b', '', g.colorName || 'Renksiz'));
+    t.appendChild(el('span', '', multi
+      ? g.material + ' · ' + g.spools.length + ' makara'
+      : (one.brand ? one.brand + ' · ' : '') + g.material + ' · ' + fmt(one.initial) + ' g'));
+    top.appendChild(sw); top.appendChild(t);
+    if (g.total <= 0) top.appendChild(el('span', 'badge', 'Bitti'));
+    else if (p <= 20) top.appendChild(el('span', 'badge', 'Azaldı'));
+    c.appendChild(top);
+
+    var bar = el('div', 'bar'); var fill = el('i');
+    fill.style.width = p + '%'; fill.style.background = barColor(p);
+    bar.appendChild(fill); c.appendChild(bar);
+
+    var nums = el('div', 'nums');
+    var l = el('span'); l.appendChild(el('b', '', fmtW(g.total))); l.appendChild(document.createTextNode(' kaldı'));
+    nums.appendChild(l); nums.appendChild(el('span', '', '%' + Math.round(p)));
+    c.appendChild(nums);
+
+    if (multi){
+      var list = el('div', 'slist');
+      g.spools.forEach(function(s, i){
+        var low = pctOf(s) <= 20;
+        var isOpen = !!openIds[s.id];
+        var row = el('button', 'srow'); row.type = 'button';
+        row.appendChild(el('span', 'snm', (s.brand || 'Makara') + ' ' + (i + 1)));
+        var v = el('span', 'sv' + (low ? ' low' : ''), fmt(s.remaining) + ' g');
+        v.appendChild(el('em', '', isOpen ? ' ▴' : ' ▾'));
+        row.appendChild(v);
+        row.onclick = function(){ if (openIds[s.id]) delete openIds[s.id]; else openIds[s.id] = 1; render(); };
+        list.appendChild(row);
+        if (isOpen) list.appendChild(spoolPanel(s));
+      });
+      c.appendChild(list);
+    } else {
+      var open = !!openIds[one.id];
+      var tog = el('button', 'small toggle', open ? 'Kapat ▴' : 'İşlemler ▾');
+      tog.type = 'button';
+      tog.onclick = function(){ if (openIds[one.id]) delete openIds[one.id]; else openIds[one.id] = 1; render(); };
+      c.appendChild(tog);
+      if (open) c.appendChild(spoolPanel(one));
+    }
     return c;
   }
 
@@ -781,212 +816,6 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     r.readAsText(f, 'utf-8');
   };
 
-  /* ---------- GitHub sync (yalnızca kendi sitende) ---------- */
-  var GH_KEY = 'filament-gh-v1', GH_DIRTY = 'filament-gh-dirty';
-  var ghSha = null, ghBusy = false, ghTimer = null, ghDirty = false;
-
-  function b64enc(str){
-    var bytes = new TextEncoder().encode(str), bin = '';
-    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-    return btoa(bin);
-  }
-  function b64dec(b64){
-    var bin = atob(String(b64).replace(/\s/g, '')), bytes = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    return new TextDecoder().decode(bytes);
-  }
-  function openModal(d){ if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
-  function closeModal(d){ if (d.close) d.close(); else d.removeAttribute('open'); }
-
-  function ghLoadCfg(){
-    try {
-      var c = JSON.parse(localStorage.getItem(GH_KEY) || 'null');
-      if (c && c.owner && c.repo && c.token) return c;
-    } catch(e){}
-    return null;
-  }
-  function ghSetStat(msg, isErr){
-    var s = $('ghStat'); s.textContent = msg || ''; s.className = isErr ? 'err' : '';
-  }
-  function ghSetDirty(v){
-    ghDirty = v;
-    try { if (v) localStorage.setItem(GH_DIRTY, '1'); else localStorage.removeItem(GH_DIRTY); } catch(e){}
-  }
-  function ghApi(path){
-    return 'https://api.github.com/repos/' + encodeURIComponent(gh.owner) + '/' + encodeURIComponent(gh.repo) + path;
-  }
-  function ghFileUrl(){
-    return ghApi('/contents/' + gh.path.split('/').map(encodeURIComponent).join('/'));
-  }
-  function ghHeaders(json){
-    var h = { 'Authorization': 'Bearer ' + gh.token, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
-    if (json) h['Content-Type'] = 'application/json';
-    return h;
-  }
-  function ghFail(res){
-    var code = res.status === 401 ? 'auth' : res.status === 403 ? 'forbidden'
-      : (res.status === 409 || res.status === 422) ? 'conflict' : res.status === 404 ? 'notfound' : 'http';
-    return { code: code, status: res.status };
-  }
-  function ghErrText(e){
-    if (e && e.code === 'auth') return 'GitHub: token geçersiz veya süresi dolmuş';
-    if (e && e.code === 'forbidden') return 'GitHub: izin yok (token yetkisini kontrol et)';
-    if (e && e.code === 'notfound') return 'GitHub: depo bulunamadı (adı ve token erişimini kontrol et)';
-    return 'GitHub: bağlanılamadı';
-  }
-  function normSpool(x){
-    if (!x || typeof x !== 'object') return null;
-    var id = String(x.id || '');
-    if (!/^[A-Za-z0-9_\-.~:@+]{1,100}$/.test(id)) return null;
-    var initial = Math.max(1, num(x.initial, 1000));
-    return {
-      id: id,
-      brand: String(x.brand || '').slice(0, 40),
-      material: String(x.material || 'Diğer').slice(0, 20),
-      colorName: String(x.colorName || '').slice(0, 40),
-      colorHex: safeHex(String(x.colorHex || '')),
-      initial: initial,
-      remaining: Math.max(0, Math.min(initial, num(x.remaining, 0))),
-      spoolWeight: Math.max(0, num(x.spoolWeight, 0)),
-      price: Math.max(0, num(x.price, 0)),
-      note: String(x.note || '').slice(0, 200),
-      createdAt: num(x.createdAt, 0),
-      log: normLog(x.log)
-    };
-  }
-
-  async function ghPull(){
-    var res = await fetch(ghFileUrl() + '?ref=' + encodeURIComponent(gh.branch), { headers: ghHeaders(false), cache: 'no-store' });
-    if (res.status === 404){
-      var rr = await fetch(ghApi(''), { headers: ghHeaders(false), cache: 'no-store' });
-      if (!rr.ok) throw ghFail(rr);
-      return { sha: null, spools: null };
-    }
-    if (!res.ok) throw ghFail(res);
-    var j = await res.json();
-    var data = JSON.parse(b64dec(j.content));
-    var arr = Array.isArray(data.spools) ? data.spools : [];
-    return { sha: j.sha, spools: arr.map(normSpool).filter(Boolean) };
-  }
-  async function ghPush(){
-    var payload = {
-      message: 'Filament listesi güncellendi',
-      content: b64enc(JSON.stringify({ version: 1, updatedAt: Date.now(), spools: spools }, null, 1)),
-      branch: gh.branch
-    };
-    if (ghSha) payload.sha = ghSha;
-    var res = await fetch(ghFileUrl(), { method: 'PUT', headers: ghHeaders(true), body: JSON.stringify(payload) });
-    if (!res.ok) throw ghFail(res);
-    var j = await res.json();
-    if (j.content && j.content.sha) ghSha = j.content.sha;
-  }
-
-  function ghQueue(){
-    ghSetDirty(true);
-    ghSetStat("GitHub'a kaydediliyor…");
-    clearTimeout(ghTimer);
-    ghTimer = setTimeout(ghFlush, 1200);
-  }
-  async function ghFlush(){
-    if (!gh || !ghDirty) return;
-    if (ghBusy){ clearTimeout(ghTimer); ghTimer = setTimeout(ghFlush, 800); return; }
-    ghBusy = true;
-    var ok = true;
-    try {
-      ghSetDirty(false);
-      try { await ghPush(); }
-      catch(e){
-        if (e && e.code === 'conflict'){ var r = await ghPull(); ghSha = r.sha; await ghPush(); }
-        else throw e;
-      }
-    } catch(e){
-      ok = false;
-      ghSetDirty(true);
-      ghSetStat(ghErrText(e) + ' — tekrar denemek için tıkla', true);
-    }
-    ghBusy = false;
-    if (ok){
-      if (ghDirty){ clearTimeout(ghTimer); ghTimer = setTimeout(ghFlush, 300); }
-      else ghSetStat("GitHub'a kaydedildi ✓");
-    }
-  }
-  async function ghLoad(first){
-    ghSetStat("GitHub'dan okunuyor…");
-    try {
-      var r = await ghPull();
-      ghSha = r.sha;
-      if (r.spools === null){
-        if (spools.length) ghQueue(); else ghSetStat("GitHub'a bağlı ✓ (henüz veri yok)");
-      } else if (first){
-        var have = {};
-        r.spools.forEach(function(s){ have[s.id] = 1; });
-        var extra = spools.filter(function(s){ return !have[s.id]; });
-        spools = r.spools.concat(extra);
-        lsSave(); render();
-        if (extra.length) ghQueue(); else ghSetStat("GitHub'a bağlı ✓");
-      } else if (!ghDirty){
-        spools = r.spools; lsSave(); render();
-        ghSetStat("GitHub'a bağlı ✓");
-      }
-    } catch(e){
-      ghSetStat(ghErrText(e) + ' — tekrar denemek için tıkla', true);
-    }
-  }
-  function ghUiState(){
-    $('ghBtn').textContent = gh ? '☁ GitHub ayarları' : "☁ GitHub'a bağla";
-    if (gh) $('foot').textContent = 'Veriler GitHub hesabındaki ' + gh.owner + '/' + gh.repo + ' deposunda saklanır.';
-  }
-
-  $('ghBtn').onclick = function(){
-    var c = gh || {};
-    $('gOwner').value = c.owner || '';
-    $('gRepo').value = c.repo || '';
-    $('gToken').value = c.token || '';
-    $('gBranch').value = c.branch || 'main';
-    $('gPath').value = c.path || 'data.json';
-    $('gOff').style.display = gh ? '' : 'none';
-    openModal($('ghDlg'));
-  };
-  $('gCancel').onclick = function(){ closeModal($('ghDlg')); };
-  $('gOff').onclick = function(){
-    try { localStorage.removeItem(GH_KEY); localStorage.removeItem(GH_DIRTY); } catch(e){}
-    gh = null; ghSha = null; ghDirty = false; clearTimeout(ghTimer);
-    ghSetStat(''); ghUiState(); setFoot(false);
-    closeModal($('ghDlg')); toast('GitHub bağlantısı kaldırıldı');
-  };
-  $('ghForm').onsubmit = function(e){
-    e.preventDefault();
-    var c = {
-      owner: $('gOwner').value.trim(),
-      repo: $('gRepo').value.trim(),
-      token: $('gToken').value.trim(),
-      branch: $('gBranch').value.trim() || 'main',
-      path: ($('gPath').value.trim() || 'data.json').replace(/^\/+/, '')
-    };
-    if (!c.owner || !c.repo || !c.token){ toast('Tüm alanları doldur'); return; }
-    if (!/^[A-Za-z0-9_.-]+$/.test(c.owner) || !/^[A-Za-z0-9_.-]+$/.test(c.repo)){ toast('Kullanıcı veya depo adı geçersiz'); return; }
-    try { localStorage.setItem(GH_KEY, JSON.stringify(c)); } catch(err){ toast('Ayar kaydedilemedi'); return; }
-    gh = c; ghSha = null; ghSetDirty(false);
-    ghUiState(); closeModal($('ghDlg')); ghLoad(true);
-  };
-  $('ghStat').onclick = function(){
-    if (!gh || ghBusy) return;
-    if (ghDirty) ghFlush(); else ghLoad(false);
-  };
-  document.addEventListener('visibilitychange', function(){
-    if (gh && !document.hidden && !ghDirty && !ghBusy) ghLoad(false);
-  });
-  function ghInit(){
-    if (!standalone) return;
-    $('ghBtn').style.display = '';
-    gh = ghLoadCfg();
-    ghUiState();
-    if (!gh) return;
-    try { ghDirty = localStorage.getItem(GH_DIRTY) === '1'; } catch(e){}
-    if (ghDirty){ ghSetStat("GitHub'a kaydediliyor…"); ghFlush(); }
-    else ghLoad(false);
-  }
-
   $('q').oninput = render;
   $('sort').onchange = render;
 
@@ -996,7 +825,7 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
       ? 'Veriler bu sayfaya kaydedilir; her cihazda aynı liste görünür.'
       : 'Veriler yalnızca bu tarayıcıda saklanır.';
   }
-  spools = lsLoad(); setFoot(false); render(); ghInit();
+  spools = lsLoad(); setFoot(false); render();
 
   if (window.claude && window.claude.use){
     window.claude.use('db').then(function(d){
