@@ -84,20 +84,6 @@
     "log": []
   },
   {
-    "id": "smu9o4bntbw0y",
-    "brand": "",
-    "material": "PLA",
-    "colorName": "CR-BEYAZ",
-    "colorHex": "#ffffff",
-    "initial": 200,
-    "remaining": 150,
-    "spoolWeight": 50,
-    "price": 0,
-    "note": "",
-    "createdAt": 1789900546429,
-    "log": []
-  },
-  {
     "id": "smu9ocltcqcxc",
     "brand": "",
     "material": "ABS",
