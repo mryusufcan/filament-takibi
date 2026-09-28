@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1790596228199,
+ "updatedAt": 1790596257665,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -63,7 +63,7 @@
    "brand": "",
    "material": "PLA",
    "colorName": "KAHVERENGİ",
-   "colorHex": "#7a4343",
+   "colorHex": "#362000",
    "initial": 1000,
    "remaining": 240,
    "spoolWeight": 230,
