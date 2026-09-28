@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1790596216942,
+ "updatedAt": 1790596228199,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -202,7 +202,7 @@
    "id": "smul6r6ie4qmq",
    "brand": "XPLA",
    "material": "PLA",
-   "colorName": "Çikolata",
+   "colorName": "ÇİKOLATA",
    "colorHex": "#4d300a",
    "initial": 1000,
    "remaining": 1000,
