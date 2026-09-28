@@ -105,4 +105,4 @@ GitHub Pages etkinleştirildikten sonra uygulama şu yapıda yayınlanır:
 
 ## Lisans
 
-Bu proje kişisel kullanım amacıyla geliştirilmiştir. İstersen depoya ayrıca bir lisans dosyası ekleyebilirsin.
+Bu proje kişisel kullanım amacıyla geliştirilmiştir.
