@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1790596009510,
+ "updatedAt": 1790596093574,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -171,6 +171,27 @@
    "log": [
     {
      "t": 1790595517508,
+     "k": "add",
+     "g": 1000,
+     "r": 1000
+    }
+   ]
+  },
+  {
+   "id": "smul6ojbl6ie0",
+   "brand": "Eco ABS",
+   "material": "ABS",
+   "colorName": "Gümüş",
+   "colorHex": "#333333",
+   "initial": 1000,
+   "remaining": 1000,
+   "spoolWeight": 230,
+   "price": 0,
+   "note": "",
+   "createdAt": 1790596092369,
+   "log": [
+    {
+     "t": 1790596092369,
      "k": "add",
      "g": 1000,
      "r": 1000
