@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1790184801939,
+ "updatedAt": 1790595483317,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -186,6 +186,27 @@
      "k": "weigh",
      "g": -226,
      "r": 774
+    }
+   ]
+  },
+  {
+   "id": "smul6bgfruvzk",
+   "brand": "XPLA",
+   "material": "PLA",
+   "colorName": "SİYAH",
+   "colorHex": "#333333",
+   "initial": 1000,
+   "remaining": 50,
+   "spoolWeight": 230,
+   "price": 0,
+   "note": "",
+   "createdAt": 1790595482103,
+   "log": [
+    {
+     "t": 1790595482104,
+     "k": "add",
+     "g": 50,
+     "r": 50
     }
    ]
   }
