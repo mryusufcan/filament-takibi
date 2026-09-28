@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1790595554712,
+ "updatedAt": 1790595965169,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -99,33 +99,6 @@
    "note": "",
    "createdAt": 1789900546429,
    "log": []
-  },
-  {
-   "id": "smu9o5byn0exg",
-   "brand": "",
-   "material": "ABS",
-   "colorName": "SİYAH",
-   "colorHex": "#000000",
-   "initial": 1000,
-   "remaining": 33,
-   "spoolWeight": 230,
-   "price": 0,
-   "note": "",
-   "createdAt": 1789900546430,
-   "log": [
-    {
-     "t": 1789929894473,
-     "k": "weigh",
-     "g": -69,
-     "r": 50
-    },
-    {
-     "t": 1790184800732,
-     "k": "edit",
-     "g": -17,
-     "r": 33
-    }
-   ]
   },
   {
    "id": "smu9o7a4ns4lt",
