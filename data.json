@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updatedAt": 1790595965169,
+ "updatedAt": 1790596009510,
  "spools": [
   {
    "id": "smu9nti7jkhmg",
@@ -99,33 +99,6 @@
    "note": "",
    "createdAt": 1789900546429,
    "log": []
-  },
-  {
-   "id": "smu9o7a4ns4lt",
-   "brand": "",
-   "material": "PLA",
-   "colorName": "SİYAH",
-   "colorHex": "#000000",
-   "initial": 1000,
-   "remaining": 70,
-   "spoolWeight": 230,
-   "price": 0,
-   "note": "",
-   "createdAt": 1789900546430,
-   "log": [
-    {
-     "t": 1789929920616,
-     "k": "use",
-     "g": 25,
-     "r": 45
-    },
-    {
-     "t": 1789929959973,
-     "k": "edit",
-     "g": 25,
-     "r": 70
-    }
-   ]
   },
   {
    "id": "smu9ocltcqcxc",
