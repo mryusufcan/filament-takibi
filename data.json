@@ -1,0 +1,219 @@
+[
+  {
+    "id": "smu9nti7jkhmg",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "GRİ",
+    "colorHex": "#696969",
+    "initial": 1000,
+    "remaining": 916,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546427,
+    "log": []
+  },
+  {
+    "id": "smu9nv64fb0wy",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "BEYAZ",
+    "colorHex": "#ffffff",
+    "initial": 1000,
+    "remaining": 1000,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": []
+  },
+  {
+    "id": "smu9nvtftp1uy",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "BEYAZ",
+    "colorHex": "#ffffff",
+    "initial": 1000,
+    "remaining": 587,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": []
+  },
+  {
+    "id": "smu9nwkt6ec9z",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "YAKUT",
+    "colorHex": "#c82536",
+    "initial": 1000,
+    "remaining": 897,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": []
+  },
+  {
+    "id": "smu9o2pozwgvp",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "KAHVERENGİ",
+    "colorHex": "#362000",
+    "initial": 1000,
+    "remaining": 240,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": []
+  },
+  {
+    "id": "smu9o3mxe53o5",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "ALTIN SARI",
+    "colorHex": "#ffea00",
+    "initial": 1000,
+    "remaining": 700,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546429,
+    "log": []
+  },
+  {
+    "id": "smu9o4bntbw0y",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "CR-BEYAZ",
+    "colorHex": "#ffffff",
+    "initial": 200,
+    "remaining": 150,
+    "spoolWeight": 50,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546429,
+    "log": []
+  },
+  {
+    "id": "smu9ocltcqcxc",
+    "brand": "",
+    "material": "ABS",
+    "colorName": "BEYAZ",
+    "colorHex": "#ffffff",
+    "initial": 1000,
+    "remaining": 614,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546430,
+    "log": []
+  },
+  {
+    "id": "smu9ode6susqv",
+    "brand": "",
+    "material": "ABS",
+    "colorName": "SİYAH",
+    "colorHex": "#000000",
+    "initial": 1000,
+    "remaining": 774,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546431,
+    "log": [
+      {
+        "t": 1790184665649,
+        "k": "weigh",
+        "g": -226,
+        "r": 774
+      }
+    ]
+  },
+  {
+    "id": "smul6bgfruvzk",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "SİYAH",
+    "colorHex": "#000000",
+    "initial": 1000,
+    "remaining": 50,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790595482103,
+    "log": [
+      {
+        "t": 1790595482104,
+        "k": "add",
+        "g": 50,
+        "r": 50
+      }
+    ]
+  },
+  {
+    "id": "smul6c7r8k92x",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "SİYAH",
+    "colorHex": "#000000",
+    "initial": 1000,
+    "remaining": 1000,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790595517508,
+    "log": [
+      {
+        "t": 1790595517508,
+        "k": "add",
+        "g": 1000,
+        "r": 1000
+      }
+    ]
+  },
+  {
+    "id": "smul6ojbl6ie0",
+    "brand": "Eco ABS",
+    "material": "ABS",
+    "colorName": "Gümüş",
+    "colorHex": "#333333",
+    "initial": 1000,
+    "remaining": 1000,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790596092369,
+    "log": [
+      {
+        "t": 1790596092369,
+        "k": "add",
+        "g": 1000,
+        "r": 1000
+      }
+    ]
+  },
+  {
+    "id": "smul6r6ie4qmq",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "ÇİKOLATA",
+    "colorHex": "#4d300a",
+    "initial": 1000,
+    "remaining": 1000,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790596215734,
+    "log": [
+      {
+        "t": 1790596215734,
+        "k": "add",
+        "g": 1000,
+        "r": 1000
+      }
+    ]
+  }
+]
