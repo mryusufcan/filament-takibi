@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Filament Takibi</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2064%2064%27%3E%3Crect%20width=%2764%27%20height=%2764%27%20rx=%2714%27%20fill=%27%23d9541e%27/%3E%3Ccircle%20cx=%2732%27%20cy=%2732%27%20r=%2720%27%20fill=%27none%27%20stroke=%27%23ffffff%27%20stroke-width=%276%27/%3E%3Ccircle%20cx=%2732%27%20cy=%2732%27%20r=%276%27%20fill=%27%23ffffff%27/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#f6f5f2; --card:#ffffff; --text:#1d1d1b; --muted:#6b6a65; --line:#e4e2dc;
@@ -112,6 +113,9 @@ label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute
 .hd{min-width:0}
 .hd small,.hv small{display:block;color:var(--muted);font-size:12px;font-weight:400}
 .hv{font-weight:600;white-space:nowrap;text-align:right}
+.formacts{flex-wrap:wrap}
+#ghStat{text-align:center;margin-top:10px;font-size:13px;color:var(--muted);min-height:18px}
+#ghStat.err{color:var(--bad);cursor:pointer}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--text);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:14px;display:none;z-index:10}
 @media (max-width:480px){.stat b{font-size:20px}}
 
@@ -198,7 +202,9 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     <button type="button" class="small" id="exportBtn">⬇ Yedek indir (CSV)</button>
     <button type="button" class="small" id="importBtn">⬆ Yedekten yükle</button>
     <input type="file" id="importFile" accept=".csv,text/csv,text/plain" hidden>
+    <button type="button" class="small" id="ghBtn">☁ GitHub'a bağla</button>
   </div>
+  <div id="ghStat"></div>
   <footer id="foot"></footer>
 </div>
 
@@ -238,16 +244,41 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     </div>
   </form>
 </dialog>
+
+<dialog id="ghDlg">
+  <form id="ghForm" method="dialog">
+    <h2>GitHub'a bağla</h2>
+    <div class="note">Liste, bu depodaki dosyaya kaydedilir. Token yalnızca bu tarayıcıda saklanır.</div>
+    <div class="row">
+      <label>GitHub kullanıcı adı<input id="gOwner" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+      <label>Veri deposu adı<input id="gRepo" placeholder="filament-veri" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+    </div>
+    <label>Token (fine-grained)<input id="gToken" type="password" autocomplete="off" spellcheck="false"></label>
+    <div class="row">
+      <label>Dal (branch)<input id="gBranch" value="main" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+      <label>Dosya<input id="gPath" value="data.json" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+    </div>
+    <div class="formacts">
+      <button type="button" class="danger" id="gOff">Bağlantıyı kaldır</button>
+      <button type="button" id="gCancel">Vazgeç</button>
+      <button type="submit" class="primary">Bağlan</button>
+    </div>
+  </form>
+</dialog>
 <div id="toast"></div>
 
 <script>
 (function(){
   var LS_KEY = 'filament-spools-v1';
+  var GH_KEY = 'filament-gh-cfg-v1';
   var spools = [];
   var dbh = null;
   var filterMat = 'Tümü';
   var editingId = null;
   var chain = Promise.resolve();
+  var gh = null;
+  var ghTimer = null;
+  var ghSha = null;
 
   function $(id){ return document.getElementById(id); }
   function el(tag, cls, text){
@@ -301,6 +332,7 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
       var i = spools.findIndex(function(x){ return x.id === s.id; });
       if (i >= 0) spools[i] = s; else spools.push(s);
       lsSave(); render();
+      if (gh) ghQueue();
     }
   }
   function removeSpool(id){
@@ -309,8 +341,179 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     } else {
       spools = spools.filter(function(x){ return x.id !== id; });
       lsSave(); render();
+      if (gh) ghQueue();
     }
   }
+
+  /* ---------- GitHub Sync ---------- */
+  function ghLoadCfg(){
+    try { var r = localStorage.getItem(GH_KEY); return r ? JSON.parse(r) : null; }
+    catch(e){ return null; }
+  }
+  function ghSaveCfg(cfg){
+    try {
+      if (cfg) localStorage.setItem(GH_KEY, JSON.stringify(cfg));
+      else localStorage.removeItem(GH_KEY);
+    } catch(e){}
+  }
+
+  function utf8B64Encode(str){
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+      return String.fromCharCode('0x' + p1);
+    }));
+  }
+
+  function utf8B64Decode(str){
+    return decodeURIComponent(Array.prototype.map.call(atob(str.replace(/\s/g, '')), function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  }
+
+  function ghApi(path, method, bodyObj){
+    if (!gh) return Promise.reject(new Error('GitHub yapılandırılmadı'));
+    var url = 'https://api.github.com/repos/' + encodeURIComponent(gh.owner) + '/' + encodeURIComponent(gh.repo) + '/contents/' + encodeURIComponent(gh.path).replace(/%2F/gi, '/');
+    var opts = {
+      method: method || 'GET',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + gh.token,
+        'Content-Type': 'application/json'
+      }
+    };
+    if (bodyObj) opts.body = JSON.stringify(bodyObj);
+    return fetch(url + '?ref=' + encodeURIComponent(gh.branch || 'main'), opts).then(function(res){
+      if (res.status === 404 && (method === 'GET' || !method)) return null;
+      if (!res.ok) return res.json().then(function(j){ throw new Error((j && j.message) || 'HTTP ' + res.status); });
+      return res.json();
+    });
+  }
+
+  function ghSetStat(msg, isErr){
+    var st = $('ghStat');
+    st.textContent = msg || '';
+    st.className = isErr ? 'err' : '';
+  }
+
+  function ghFetchData(){
+    if (!gh) return;
+    ghSetStat('GitHub ile eşitleniyor…');
+    ghApi().then(function(data){
+      if (!data){
+        ghSha = null;
+        ghSetStat('GitHub: Dosya oluşturulacak (henüz yok)');
+        return;
+      }
+      ghSha = data.sha;
+      try {
+        var contentText = utf8B64Decode(data.content);
+        var parsed = JSON.parse(contentText);
+        if (Array.isArray(parsed)){
+          spools = parsed;
+          lsSave();
+          render();
+          ghSetStat('GitHub: Güncel');
+        } else {
+          ghSetStat('GitHub: Dosya formatı geçersiz', true);
+        }
+      } catch(e){
+        ghSetStat('GitHub: Ayrıştırma hatası', true);
+      }
+    }).catch(function(err){
+      ghSetStat('GitHub hatası: ' + err.message, true);
+    });
+  }
+
+  function ghPushData(){
+    if (!gh) return;
+    ghSetStat('GitHub’a aktarılıyor…');
+    var jsonStr = JSON.stringify(spools, null, 2);
+    var payload = {
+      message: 'Filament takibi güncellemesi',
+      content: utf8B64Encode(jsonStr),
+      branch: gh.branch || 'main'
+    };
+    if (ghSha) payload.sha = ghSha;
+
+    var url = 'https://api.github.com/repos/' + encodeURIComponent(gh.owner) + '/' + encodeURIComponent(gh.repo) + '/contents/' + encodeURIComponent(gh.path).replace(/%2F/gi, '/');
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + gh.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if (!res.ok) return res.json().then(function(j){ throw new Error((j && j.message) || 'HTTP ' + res.status); });
+      return res.json();
+    }).then(function(res){
+      if (res && res.content && res.content.sha) ghSha = res.content.sha;
+      ghSetStat('GitHub: Güncellendi');
+    }).catch(function(err){
+      ghSetStat('GitHub kaydetme hatası: ' + err.message, true);
+    });
+  }
+
+  function ghQueue(){
+    if (!gh) return;
+    clearTimeout(ghTimer);
+    ghSetStat('GitHub kaydı bekleniyor…');
+    ghTimer = setTimeout(ghPushData, 2000);
+  }
+
+  function openGhDlg(){
+    $('gOwner').value = gh ? gh.owner : '';
+    $('gRepo').value = gh ? gh.repo : '';
+    $('gToken').value = gh ? gh.token : '';
+    $('gBranch').value = gh ? (gh.branch || 'main') : 'main';
+    $('gPath').value = gh ? (gh.path || 'data.json') : 'data.json';
+    $('gOff').style.display = gh ? '' : 'none';
+    var d = $('ghDlg');
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  }
+
+  function closeGhDlg(){
+    var d = $('ghDlg');
+    if (d.close) d.close(); else d.removeAttribute('open');
+  }
+
+  $('ghBtn').onclick = openGhDlg;
+  $('gCancel').onclick = closeGhDlg;
+  $('gOff').onclick = function(){
+    gh = null;
+    ghSha = null;
+    ghSaveCfg(null);
+    closeGhDlg();
+    $('ghBtn').textContent = '☁ GitHub\'a bağla';
+    ghSetStat('');
+    setFoot(false);
+    toast('GitHub bağlantısı kaldırıldı');
+  };
+
+  $('ghForm').onsubmit = function(e){
+    e.preventDefault();
+    var owner = $('gOwner').value.trim();
+    var repo = $('gRepo').value.trim();
+    var token = $('gToken').value.trim();
+    var branch = $('gBranch').value.trim() || 'main';
+    var path = $('gPath').value.trim() || 'data.json';
+
+    if (!owner || !repo || !token){
+      toast('Lütfen zorunlu alanları doldurun');
+      return;
+    }
+
+    gh = { owner: owner, repo: repo, token: token, branch: branch, path: path };
+    ghSaveCfg(gh);
+    closeGhDlg();
+    $('ghBtn').textContent = '☁ GitHub: ' + owner + '/' + repo;
+    setFoot('gh');
+    ghFetchData();
+  };
+
+  $('ghStat').onclick = function(){
+    if (gh) ghFetchData();
+  };
 
   /* ---------- render ---------- */
   function pctOf(s){ return s.initial > 0 ? Math.max(0, Math.min(100, s.remaining / s.initial * 100)) : 0; }
@@ -388,25 +591,8 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     view.forEach(function(s){ list.appendChild(card(s)); });
   }
 
-  var PAL = ['#d9541e','#2f7fd9','#2f9e5b','#8a5cd6','#d99a12','#d6457a','#3aa6a6','#7a6a55'];
   function fmtW(g){ return g >= 1000 ? fmt(g / 1000) + ' kg' : fmt(g) + ' g'; }
-  function drawBars(host, rows){
-    host.textContent = '';
-    var max = 0;
-    rows.forEach(function(r){ if (r.total > max) max = r.total; });
-    rows.forEach(function(r){
-      var row = el('div', 'crow');
-      row.title = r.label + ': ' + fmtW(r.total) + ' (' + r.count + ' makara)';
-      row.appendChild(el('div', 'cname', r.label));
-      var bar = el('div', 'cbar'), f = el('b');
-      f.style.width = (max > 0 ? Math.max(3, r.total / max * 100) : 0) + '%';
-      f.style.background = r.color;
-      bar.appendChild(f);
-      row.appendChild(bar);
-      row.appendChild(el('div', 'cval', fmtW(r.total)));
-      host.appendChild(row);
-    });
-  }
+
   function dayKey(t){ var d = new Date(t); return d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(); }
   function dayLabel(t){
     var now = new Date(), d = new Date(t);
@@ -419,6 +605,7 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     if (d.getFullYear() !== now.getFullYear()) opt.year = 'numeric';
     return d.toLocaleDateString('tr-TR', opt);
   }
+
   function renderHistory(){
     var all = [];
     spools.forEach(function(s){ (s.log || []).forEach(function(e){ all.push({ e: e, s: s }); }); });
@@ -456,7 +643,7 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     });
     if (all.length > 60) body.appendChild(el('div', 'hsum', 'Son 60 kayıt gösteriliyor.'));
   }
-  var chartMat = 'Tümü';
+
   function drawGrouped(host, groups, max){
     host.textContent = '';
     groups.forEach(function(g){
@@ -480,6 +667,7 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
       host.appendChild(box);
     });
   }
+
   function renderCharts(){
     var sec = $('chartsWrap'), mats = {};
     function toRows(o){
@@ -521,6 +709,7 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     b.appendChild(btn);
     return b;
   }
+
   var openIds = {};
   function spoolPanel(s){
     var tare = s.spoolWeight || 0;
@@ -657,10 +846,12 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
     var d = $('dlg');
     if (d.showModal) d.showModal(); else d.setAttribute('open', '');
   }
+
   function closeDlg(){
     var d = $('dlg');
     if (d.close) d.close(); else d.removeAttribute('open');
   }
+
   $('addBtn').onclick = function(){ openDlg(null); };
   $('cancelBtn').onclick = closeDlg;
   $('form').onsubmit = function(e){
@@ -820,17 +1011,33 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
   $('sort').onchange = render;
 
   /* ---------- init ---------- */
-  function setFoot(cloud){
-    $('foot').textContent = cloud
-      ? 'Veriler bu sayfaya kaydedilir; her cihazda aynı liste görünür.'
-      : 'Veriler yalnızca bu tarayıcıda saklanır.';
+  function setFoot(mode){
+    if (mode === 'gh'){
+      $('foot').textContent = 'Veriler GitHub reponuzdaki dosyaya kaydedilir ve senkronize edilir.';
+    } else if (mode === true){
+      $('foot').textContent = 'Veriler bu sayfaya kaydedilir; her cihazda aynı liste görünür.';
+    } else {
+      $('foot').textContent = 'Veriler yalnızca bu tarayıcıda saklanır.';
+    }
   }
-  spools = lsLoad(); setFoot(false); render();
+
+  spools = lsLoad();
+  render();
+
+  gh = ghLoadCfg();
+  if (gh){
+    $('ghBtn').textContent = '☁ GitHub: ' + gh.owner + '/' + gh.repo;
+    setFoot('gh');
+    ghFetchData();
+  } else {
+    setFoot(false);
+  }
 
   if (window.claude && window.claude.use){
     window.claude.use('db').then(function(d){
       if (!d) return;
-      dbh = d; setFoot(true);
+      dbh = d;
+      setFoot(true);
       d.collection('spools').onSnapshot(function(snap){
         spools = snap.docs.map(function(doc){
           var x = doc.data() || {};
@@ -852,7 +1059,8 @@ details.adv summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--te
         render();
       }, function(err){
         console.error(err);
-        dbh = null; setFoot(false);
+        dbh = null;
+        if (!gh) setFoot(false);
       });
     }).catch(function(){});
   }
