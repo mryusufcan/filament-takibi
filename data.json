@@ -207,7 +207,7 @@
     "brand": "XPLA",
     "material": "PLA",
     "colorName": "SİYAH",
-    "colorHex": "#333333",
+    "colorHex": "#000000",
     "initial": 3000,
     "remaining": 3000,
     "spoolWeight": 0,
