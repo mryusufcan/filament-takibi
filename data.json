@@ -201,5 +201,26 @@
         "r": 1000
       }
     ]
+  },
+  {
+    "id": "smupt1ekan6js",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "SİYAH",
+    "colorHex": "#333333",
+    "initial": 1000,
+    "remaining": 1000,
+    "spoolWeight": 230,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790875508986,
+    "log": [
+      {
+        "t": 1790875508986,
+        "k": "add",
+        "g": 1000,
+        "r": 1000
+      }
+    ]
   }
 ]
