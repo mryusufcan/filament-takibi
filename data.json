@@ -228,5 +228,26 @@
         "r": 3000
       }
     ]
+  },
+  {
+    "id": "smupt33qsjrch",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "GRİ",
+    "colorHex": "#6b6b6b",
+    "initial": 1000,
+    "remaining": 1000,
+    "spoolWeight": 0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790875588276,
+    "log": [
+      {
+        "t": 1790875588276,
+        "k": "add",
+        "g": 1000,
+        "r": 1000
+      }
+    ]
   }
 ]
