@@ -187,8 +187,8 @@
     "material": "PLA",
     "colorName": "SİYAH",
     "colorHex": "#000000",
-    "initial": 3000,
-    "remaining": 3000,
+    "initial": 2000,
+    "remaining": 2000,
     "spoolWeight": 0,
     "price": 0,
     "note": "",
@@ -205,6 +205,12 @@
         "k": "edit",
         "g": 2000,
         "r": 3000
+      },
+      {
+        "t": 1791656087611,
+        "k": "edit",
+        "g": -1000,
+        "r": 2000
       }
     ]
   },
