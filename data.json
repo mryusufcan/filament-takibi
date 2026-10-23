@@ -6,7 +6,7 @@
     "colorName": "GÜMÜŞ",
     "colorHex": "#696969",
     "initial": 1000,
-    "remaining": 473,
+    "remaining": 160,
     "spoolWeight": 230,
     "price": 0,
     "note": "",
@@ -17,6 +17,12 @@
         "k": "weigh",
         "g": -443,
         "r": 473
+      },
+      {
+        "t": 1792775764769,
+        "k": "weigh",
+        "g": -313,
+        "r": 160
       }
     ]
   },
