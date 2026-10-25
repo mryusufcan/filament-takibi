@@ -1,38 +1,5 @@
 [
   {
-    "id": "smu9nti7jkhmg",
-    "brand": "",
-    "material": "PLA",
-    "colorName": "GÜMÜŞ",
-    "colorHex": "#696969",
-    "initial": 1000.0,
-    "remaining": 60.0,
-    "spoolWeight": 230.0,
-    "price": 0,
-    "note": "",
-    "createdAt": 1789900546427,
-    "log": [
-      {
-        "t": 1792431040823,
-        "k": "weigh",
-        "g": -443.0,
-        "r": 473.0
-      },
-      {
-        "t": 1792775764769,
-        "k": "weigh",
-        "g": -313.0,
-        "r": 160.0
-      },
-      {
-        "t": 1792926537534,
-        "k": "use",
-        "g": 100.0,
-        "r": 60.0
-      }
-    ]
-  },
-  {
     "id": "smu9nv64fb0wy",
     "brand": "",
     "material": "PLA",
@@ -67,12 +34,19 @@
     "colorName": "YAKUT",
     "colorHex": "#c82536",
     "initial": 1000.0,
-    "remaining": 897.0,
+    "remaining": 892.0,
     "spoolWeight": 230.0,
     "price": 0,
     "note": "",
     "createdAt": 1789900546428,
-    "log": []
+    "log": [
+      {
+        "t": 1792934696698,
+        "k": "use",
+        "g": 5.0,
+        "r": 892.0
+      }
+    ]
   },
   {
     "id": "smu9o2pozwgvp",
@@ -252,7 +226,7 @@
     "colorName": "GRİ",
     "colorHex": "#4f4f4f",
     "initial": 1000.0,
-    "remaining": 1000.0,
+    "remaining": 950.0,
     "spoolWeight": 0,
     "price": 0,
     "note": "",
@@ -263,6 +237,12 @@
         "k": "add",
         "g": 1000.0,
         "r": 1000.0
+      },
+      {
+        "t": 1792939801069,
+        "k": "use",
+        "g": 50.0,
+        "r": 950.0
       }
     ]
   }
