@@ -226,7 +226,7 @@
     "colorName": "GRİ",
     "colorHex": "#4f4f4f",
     "initial": 1000.0,
-    "remaining": 950.0,
+    "remaining": 879.0,
     "spoolWeight": 0,
     "price": 0,
     "note": "",
@@ -243,6 +243,12 @@
         "k": "use",
         "g": 50.0,
         "r": 950.0
+      },
+      {
+        "t": 1792939880117,
+        "k": "use",
+        "g": 71.0,
+        "r": 879.0
       }
     ]
   }
