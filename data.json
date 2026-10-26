@@ -97,7 +97,7 @@
     "colorName": "SİYAH",
     "colorHex": "#000000",
     "initial": 1000.0,
-    "remaining": 774.0,
+    "remaining": 764.0,
     "spoolWeight": 230.0,
     "price": 0,
     "note": "",
@@ -108,6 +108,12 @@
         "k": "weigh",
         "g": -226.0,
         "r": 774.0
+      },
+      {
+        "t": 1793029859760,
+        "k": "use",
+        "g": 10.0,
+        "r": 764.0
       }
     ]
   },
