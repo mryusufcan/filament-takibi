@@ -1,0 +1,19 @@
+﻿{
+    "github":  {
+                   "owner":  "mryusufcan",
+                   "repo":  "filament-takibi",
+                   "token":  "",
+                   "branch":  "main",
+                   "path":  "data.json"
+               },
+    "auto_apply":  true,
+    "auto_process":  true,
+    "process_map":  {
+                        "ABS":  "ABS 0.20mm ---",
+                        "PLA":  "PLA 0.20mm ---"
+                    },
+    "last_sync":  1794585315544,
+    "mappings":  {
+
+                 }
+}

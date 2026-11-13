@@ -1,0 +1,363 @@
+[
+  {
+    "id": "smu9nv64fb0wy",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "BEYAZ",
+    "colorHex": "#ffffff",
+    "initial": 1000.0,
+    "remaining": 1000.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": []
+  },
+  {
+    "id": "smu9nvtftp1uy",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "BEYAZ",
+    "colorHex": "#ffffff",
+    "initial": 1000.0,
+    "remaining": 587.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": []
+  },
+  {
+    "id": "smu9nwkt6ec9z",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "YAKUT",
+    "colorHex": "#c82536",
+    "initial": 1000.0,
+    "remaining": 892.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": [
+      {
+        "t": 1792934696698,
+        "k": "use",
+        "g": 5.0,
+        "r": 892.0
+      }
+    ]
+  },
+  {
+    "id": "smu9o2pozwgvp",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "KAHVERENGİ",
+    "colorHex": "#362000",
+    "initial": 1000.0,
+    "remaining": 240.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546428,
+    "log": []
+  },
+  {
+    "id": "smu9o3mxe53o5",
+    "brand": "",
+    "material": "PLA",
+    "colorName": "GOLD",
+    "colorHex": "#ffc800",
+    "initial": 1000.0,
+    "remaining": 700.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546429,
+    "log": []
+  },
+  {
+    "id": "smu9ocltcqcxc",
+    "brand": "",
+    "material": "ABS",
+    "colorName": "BEYAZ",
+    "colorHex": "#ffffff",
+    "initial": 1000.0,
+    "remaining": 614.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546430,
+    "log": []
+  },
+  {
+    "id": "smu9ode6susqv",
+    "brand": "",
+    "material": "ABS",
+    "colorName": "SİYAH",
+    "colorHex": "#000000",
+    "initial": 1000.0,
+    "remaining": 671.3,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1789900546431,
+    "log": [
+      {
+        "t": 1790184665649,
+        "k": "weigh",
+        "g": -226.0,
+        "r": 774.0
+      },
+      {
+        "t": 1793029859760,
+        "k": "use",
+        "g": 10.0,
+        "r": 764.0
+      },
+      {
+        "t": 1793033347308,
+        "k": "use",
+        "g": 17.7,
+        "r": 746.3
+      },
+      {
+        "t": 1793273996569,
+        "k": "use",
+        "g": 11.5,
+        "r": 734.8
+      },
+      {
+        "t": 1793291966633,
+        "k": "use",
+        "g": 13.2,
+        "r": 721.6
+      },
+      {
+        "t": 1793366732717,
+        "k": "use",
+        "g": 11.8,
+        "r": 709.8
+      },
+      {
+        "t": 1793551552846,
+        "k": "use",
+        "g": 11.9,
+        "r": 697.9
+      },
+      {
+        "t": 1793637528894,
+        "k": "use",
+        "g": 8.7,
+        "r": 689.2
+      },
+      {
+        "t": 1794226979820,
+        "k": "use",
+        "g": 2.7,
+        "r": 686.5
+      },
+      {
+        "t": 1794228818394,
+        "k": "use",
+        "g": 15.2,
+        "r": 671.3
+      }
+    ]
+  },
+  {
+    "id": "smul6c7r8k92x",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "SİYAH",
+    "colorHex": "#000000",
+    "initial": 1000.0,
+    "remaining": 739.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790595517508,
+    "log": [
+      {
+        "t": 1790595517508,
+        "k": "add",
+        "g": 1000.0,
+        "r": 1000.0
+      },
+      {
+        "t": 1792431175194,
+        "k": "weigh",
+        "g": -261.0,
+        "r": 739.0
+      }
+    ]
+  },
+  {
+    "id": "smul6ojbl6ie0",
+    "brand": "ECO",
+    "material": "ABS",
+    "colorName": "GRİ",
+    "colorHex": "#575757",
+    "initial": 1000.0,
+    "remaining": 1000.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790596092369,
+    "log": [
+      {
+        "t": 1790596092369,
+        "k": "add",
+        "g": 1000.0,
+        "r": 1000.0
+      }
+    ]
+  },
+  {
+    "id": "smul6r6ie4qmq",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "KAHVERENGİ",
+    "colorHex": "#4d300a",
+    "initial": 1000.0,
+    "remaining": 962.0,
+    "spoolWeight": 230.0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790596215734,
+    "log": [
+      {
+        "t": 1790596215734,
+        "k": "add",
+        "g": 1000.0,
+        "r": 1000.0
+      },
+      {
+        "t": 1794569879629,
+        "k": "use",
+        "g": 33.0,
+        "r": 967.0
+      },
+      {
+        "t": 1794585245248,
+        "k": "use",
+        "g": 1.7,
+        "r": 965.3
+      },
+      {
+        "t": 1794586639355,
+        "k": "use",
+        "g": 1.6,
+        "r": 963.7
+      },
+      {
+        "t": 1794587610978,
+        "k": "use",
+        "g": 1.7,
+        "r": 962.0
+      }
+    ]
+  },
+  {
+    "id": "smupt1ekan6js",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "SİYAH",
+    "colorHex": "#000000",
+    "initial": 2000.0,
+    "remaining": 1000.0,
+    "spoolWeight": 0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790875508986,
+    "log": [
+      {
+        "t": 1790875508986,
+        "k": "add",
+        "g": 1000.0,
+        "r": 1000.0
+      },
+      {
+        "t": 1790875537230,
+        "k": "edit",
+        "g": 2000.0,
+        "r": 3000.0
+      },
+      {
+        "t": 1791656087611,
+        "k": "edit",
+        "g": -1000.0,
+        "r": 2000.0
+      },
+      {
+        "t": 1792169719545,
+        "k": "use",
+        "g": 1000.0,
+        "r": 1000.0
+      }
+    ]
+  },
+  {
+    "id": "smupt33qsjrch",
+    "brand": "XPLA",
+    "material": "PLA",
+    "colorName": "GRİ",
+    "colorHex": "#4f4f4f",
+    "initial": 1000.0,
+    "remaining": 833.9,
+    "spoolWeight": 0,
+    "price": 0,
+    "note": "",
+    "createdAt": 1790875588276,
+    "log": [
+      {
+        "t": 1790875588276,
+        "k": "add",
+        "g": 1000.0,
+        "r": 1000.0
+      },
+      {
+        "t": 1792939801069,
+        "k": "use",
+        "g": 50.0,
+        "r": 950.0
+      },
+      {
+        "t": 1792939880117,
+        "k": "use",
+        "g": 71.0,
+        "r": 879.0
+      },
+      {
+        "t": 1793352181828,
+        "k": "use",
+        "g": 10.4,
+        "r": 868.6
+      },
+      {
+        "t": 1793363580614,
+        "k": "use",
+        "g": 3.2,
+        "r": 865.4
+      },
+      {
+        "t": 1793366866385,
+        "k": "use",
+        "g": 1.9,
+        "r": 863.5
+      },
+      {
+        "t": 1793383956978,
+        "k": "use",
+        "g": 17.8,
+        "r": 845.7
+      },
+      {
+        "t": 1793439881390,
+        "k": "use",
+        "g": 11.8,
+        "r": 833.9
+      }
+    ]
+  }
+]

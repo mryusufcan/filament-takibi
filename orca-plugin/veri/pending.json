@@ -1,0 +1,667 @@
+[
+  {
+    "id": "p8e599fcd7ee0",
+    "t": 1792933706926,
+    "output": "Kup_PLA_5g_11m7s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.2494-7afc-11b4-ce45",
+    "items": [
+      {
+        "grams": 5.0,
+        "material": "PLA",
+        "color": "#00C1AE",
+        "preset": "PLA",
+        "vendor": "PORİMA",
+        "spoolId": "smu9nti7jkhmg",
+        "confidence": "low",
+        "candidates": [
+          "smu9nti7jkhmg",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z",
+          "smu9o2pozwgvp",
+          "smu9o3mxe53o5",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq"
+        ]
+      }
+    ],
+    "total": 5.0,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Kup_PLA_5g_11m7s.gcode",
+    "appliedAt": 1792933751270
+  },
+  {
+    "id": "pc0690f5dc7b2",
+    "t": 1792934695861,
+    "output": "Kup_PLA_5g_11m7s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.28b3-1fc3-4178-a961",
+    "items": [
+      {
+        "grams": 5.0,
+        "material": "PLA",
+        "color": "#A52A2A",
+        "preset": "PLA YAKUT",
+        "vendor": "PORİMA",
+        "spoolId": "smu9nwkt6ec9z",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9nwkt6ec9z",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9o2pozwgvp",
+          "smu9o3mxe53o5",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq",
+          "smupt1ekan6js"
+        ]
+      }
+    ],
+    "total": 5.0,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Kup_PLA_5g_11m7s.gcode",
+    "appliedAt": 1792934696746
+  },
+  {
+    "id": "paa5d345ad415",
+    "t": 1792939874574,
+    "output": "pilot-holder_PLA_71g_2h18m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.61f7-24bf-d75f-329f",
+    "items": [
+      {
+        "grams": 71.0,
+        "material": "PLA",
+        "color": "#4F4F4F",
+        "preset": "PLA GRİ",
+        "vendor": "XPLA",
+        "spoolId": "smupt33qsjrch",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smupt33qsjrch",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq",
+          "smupt1ekan6js",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z",
+          "smu9o2pozwgvp"
+        ]
+      }
+    ],
+    "total": 71.0,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · pilot-holder_PLA_71g_2h18m.gcode",
+    "appliedAt": 1792939880161
+  },
+  {
+    "id": "p2d45aee189fb",
+    "t": 1793033341946,
+    "output": "door-stop-no-tpu-bottom_ABS_18g_1h24m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.d0fd-b5de-ba2b-912a",
+    "items": [
+      {
+        "grams": 17.7,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 17.7,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · door-stop-no-tpu-bottom_ABS_18g_1h24m.gcode",
+    "appliedAt": 1793033347353
+  },
+  {
+    "id": "p77563b7a4ff4",
+    "t": 1793273995558,
+    "output": "1_18_V1_Lift_Platform_Plate_Half_ABS_11g_33m14s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.2bce-98dc-5672-444f",
+    "items": [
+      {
+        "grams": 11.5,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 11.5,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · 1_18_V1_Lift_Platform_Plate_Half_ABS_11g_33m14s.gcode",
+    "appliedAt": 1793273996630
+  },
+  {
+    "id": "pa96592d749f1",
+    "t": 1793291892799,
+    "output": "Lastik_ABS_13g_1h43m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.0752-0d73-829e-f586",
+    "items": [
+      {
+        "grams": 13.2,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 13.2,
+    "status": "ignored",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Lastik_ABS_13g_1h43m.gcode",
+    "error": "Yükleme başarısız"
+  },
+  {
+    "id": "pbab4f913fa90",
+    "t": 1793291959053,
+    "output": "Adsiz tasarim 1_ABS_13g_1h43m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.7236-525b-6dcf-1fa2",
+    "items": [
+      {
+        "grams": 13.2,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 13.2,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Adsiz tasarim 1_ABS_13g_1h43m.gcode",
+    "appliedAt": 1793291966681
+  },
+  {
+    "id": "p8753fafa8dca",
+    "t": 1793352175330,
+    "output": "jant_PLA_10g_44m36s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.77f8-ec74-9fe3-f89d",
+    "items": [
+      {
+        "grams": 10.4,
+        "material": "PLA",
+        "color": "#4F4F4F",
+        "preset": "PLA GRİ",
+        "vendor": "XPLA",
+        "spoolId": "smupt33qsjrch",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smupt33qsjrch",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq",
+          "smupt1ekan6js",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z",
+          "smu9o2pozwgvp"
+        ]
+      }
+    ],
+    "total": 10.4,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · jant_PLA_10g_44m36s.gcode",
+    "appliedAt": 1793352181872
+  },
+  {
+    "id": "p35f3f32f15f8",
+    "t": 1793363568581,
+    "output": "jant_PLA_3g_11m32s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.f88a-4f28-27a8-f428",
+    "items": [
+      {
+        "grams": 3.2,
+        "material": "PLA",
+        "color": "#4F4F4F",
+        "preset": "PLA GRİ",
+        "vendor": "XPLA",
+        "spoolId": "smupt33qsjrch",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smupt33qsjrch",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq",
+          "smupt1ekan6js",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z",
+          "smu9o2pozwgvp"
+        ]
+      }
+    ],
+    "total": 3.2,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · jant_PLA_3g_11m32s.gcode",
+    "appliedAt": 1793363580664
+  },
+  {
+    "id": "p218dc48c2ef1",
+    "t": 1793366731460,
+    "output": "Seatbelt buckle v7_ABS_12g_36m31s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.eb67-2b54-7358-169e",
+    "items": [
+      {
+        "grams": 11.8,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 11.8,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Seatbelt buckle v7_ABS_12g_36m31s.gcode",
+    "appliedAt": 1793366732777
+  },
+  {
+    "id": "pdf400cf3543e",
+    "t": 1793366865622,
+    "output": "jant_PLA_2g_7m54s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.5bc2-26dc-5b1c-c3b5",
+    "items": [
+      {
+        "grams": 1.9,
+        "material": "PLA",
+        "color": "#4F4F4F",
+        "preset": "PLA GRİ",
+        "vendor": "XPLA",
+        "spoolId": "smupt33qsjrch",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smupt33qsjrch",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq",
+          "smupt1ekan6js",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z",
+          "smu9o2pozwgvp"
+        ]
+      }
+    ],
+    "total": 1.9,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · jant_PLA_2g_7m54s.gcode",
+    "appliedAt": 1793366866438
+  },
+  {
+    "id": "pcc16581c25ca",
+    "t": 1793383951163,
+    "output": "BBS+ch_PLA_18g_1h2m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.e5e7-9e91-09e4-5de6",
+    "items": [
+      {
+        "grams": 17.8,
+        "material": "PLA",
+        "color": "#4F4F4F",
+        "preset": "PLA GRİ",
+        "vendor": "XPLA",
+        "spoolId": "smupt33qsjrch",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smupt33qsjrch",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq",
+          "smupt1ekan6js",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z",
+          "smu9o2pozwgvp"
+        ]
+      }
+    ],
+    "total": 17.8,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · BBS+ch_PLA_18g_1h2m.gcode",
+    "appliedAt": 1793383957002
+  },
+  {
+    "id": "p9a9c7b71f26a",
+    "t": 1793439876724,
+    "output": "bbs_rim_PLA_12g_1h1m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.e076-fb4a-f970-f413",
+    "items": [
+      {
+        "grams": 11.8,
+        "material": "PLA",
+        "color": "#4F4F4F",
+        "preset": "PLA GRİ",
+        "vendor": "XPLA",
+        "spoolId": "smupt33qsjrch",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smupt33qsjrch",
+          "smul6c7r8k92x",
+          "smul6r6ie4qmq",
+          "smupt1ekan6js",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z",
+          "smu9o2pozwgvp"
+        ]
+      }
+    ],
+    "total": 11.8,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · bbs_rim_PLA_12g_1h1m.gcode",
+    "appliedAt": 1793439881416
+  },
+  {
+    "id": "p1a5099b85fe1",
+    "t": 1793551551616,
+    "output": "Seatbelt Muter_ABS_12g_36m13s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.82f2-ff84-b611-a3ec",
+    "items": [
+      {
+        "grams": 11.9,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 11.9,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Seatbelt Muter_ABS_12g_36m13s.gcode",
+    "appliedAt": 1793551552873
+  },
+  {
+    "id": "p7902d056873d",
+    "t": 1793637517312,
+    "output": "jant_ABS_9g_1h29m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.135d-a79b-f1f3-34e3",
+    "items": [
+      {
+        "grams": 8.7,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 8.7,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · jant_ABS_9g_1h29m.gcode",
+    "appliedAt": 1793637528919
+  },
+  {
+    "id": "p46cd946a52f3",
+    "t": 1794226979429,
+    "output": "universal-door-slider_ABS_3g_14m53s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.0bc7-84fb-e92b-aa77",
+    "items": [
+      {
+        "grams": 2.7,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 2.7,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · universal-door-slider_ABS_3g_14m53s.gcode",
+    "appliedAt": 1794226979852
+  },
+  {
+    "id": "p4d5004535ad4",
+    "t": 1794228817110,
+    "output": "obj_1_DishwasherStatus.step_A_A_ABS_15g_49m35s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.0a9a-ffbd-71b0-e17c",
+    "items": [
+      {
+        "grams": 15.2,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 15.2,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · obj_1_DishwasherStatus.step_A_A_ABS_15g_49m35s.gcode",
+    "appliedAt": 1794228818432
+  },
+  {
+    "id": "p8e640311b4d9",
+    "t": 1794569858214,
+    "output": "obj_1_two monkey middle draft 2 from blender_PLA_33g_2h44m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.1dd6-0fdb-ddc7-6231",
+    "items": [
+      {
+        "grams": 33.0,
+        "material": "PLA",
+        "color": "#4D300A",
+        "preset": "PLA KAHVERENGİ",
+        "vendor": "XPLA",
+        "spoolId": "smul6r6ie4qmq",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smul6r6ie4qmq",
+          "smu9o2pozwgvp",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smupt33qsjrch",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z"
+        ]
+      }
+    ],
+    "total": 33.0,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · obj_1_two monkey middle draft 2 from blender_PLA_33g_2h44m.gcode",
+    "appliedAt": 1794569879677
+  },
+  {
+    "id": "p4f939a350df2",
+    "t": 1794585244756,
+    "output": "bridgingtest_PLA_2g_9m3s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.323c-3b48-695f-01ef",
+    "items": [
+      {
+        "grams": 1.7,
+        "material": "PLA",
+        "color": "#4D300A",
+        "preset": "PLA KAHVERENGİ",
+        "vendor": "XPLA",
+        "spoolId": "smul6r6ie4qmq",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smul6r6ie4qmq",
+          "smu9o2pozwgvp",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smupt33qsjrch",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z"
+        ]
+      }
+    ],
+    "total": 1.7,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · bridgingtest_PLA_2g_9m3s.gcode",
+    "appliedAt": 1794585245277
+  },
+  {
+    "id": "p55530b0ea2fc",
+    "t": 1794586638885,
+    "output": "bridgingtest_PLA_2g_8m45s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.cdf9-9e98-dd51-436c",
+    "items": [
+      {
+        "grams": 1.6,
+        "material": "PLA",
+        "color": "#4D300A",
+        "preset": "PLA KAHVERENGİ",
+        "vendor": "XPLA",
+        "spoolId": "smul6r6ie4qmq",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smul6r6ie4qmq",
+          "smu9o2pozwgvp",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smupt33qsjrch",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z"
+        ]
+      }
+    ],
+    "total": 1.6,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · bridgingtest_PLA_2g_8m45s.gcode",
+    "appliedAt": 1794586639381
+  },
+  {
+    "id": "p7cb4ca5c4326",
+    "t": 1794587610448,
+    "output": "bridgingtest_PLA_2g_9m1s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.6fa8-ca51-8cb1-a25b",
+    "items": [
+      {
+        "grams": 1.7,
+        "material": "PLA",
+        "color": "#4D300A",
+        "preset": "PLA KAHVERENGİ",
+        "vendor": "XPLA",
+        "spoolId": "smul6r6ie4qmq",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smul6r6ie4qmq",
+          "smu9o2pozwgvp",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smupt33qsjrch",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z"
+        ]
+      }
+    ],
+    "total": 1.7,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · bridgingtest_PLA_2g_9m1s.gcode",
+    "appliedAt": 1794587611006
+  }
+]
