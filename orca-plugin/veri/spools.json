@@ -220,7 +220,7 @@
     "colorName": "KAHVERENGİ",
     "colorHex": "#4d300a",
     "initial": 1000.0,
-    "remaining": 960.4,
+    "remaining": 957.5,
     "spoolWeight": 230.0,
     "price": 0,
     "note": "",
@@ -261,6 +261,12 @@
         "k": "use",
         "g": 1.6,
         "r": 960.4
+      },
+      {
+        "t": 1794590269263,
+        "k": "use",
+        "g": 2.9,
+        "r": 957.5
       }
     ]
   },
