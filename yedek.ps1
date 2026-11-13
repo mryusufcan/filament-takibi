@@ -11,6 +11,9 @@ New-Item -ItemType Directory -Force (Split-Path $target) | Out-Null
 Copy-Item $source $target -Force
 
 Set-Location $repo
+# Yarıda kalmış rebase sonraki yedekleri sessizce engellemesin.
+if (Test-Path (Join-Path $repo '.git\rebase-merge')) { git rebase --abort }
+
 git add -A
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 0) { exit 0 }
