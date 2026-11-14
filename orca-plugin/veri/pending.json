@@ -993,5 +993,38 @@
     "source": "send",
     "label": "Yazıcıya gönderim · SUPPORT_TEST_DENE_060_PLA_3g_14m38s.gcode",
     "appliedAt": 1794603152746
+  },
+  {
+    "id": "p4e27d5557930",
+    "t": 1794643598859,
+    "output": "SUPPORT_TEST_DENE_UTU2_PLA_3g_14m39s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.1c6b-3be8-1bb4-213c",
+    "items": [
+      {
+        "grams": 2.8,
+        "material": "PLA",
+        "color": "#4D300A",
+        "preset": "PLA KAHVERENGİ",
+        "vendor": "XPLA",
+        "spoolId": "smul6r6ie4qmq",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smul6r6ie4qmq",
+          "smu9o2pozwgvp",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smupt33qsjrch",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9nwkt6ec9z"
+        ]
+      }
+    ],
+    "total": 2.8,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · SUPPORT_TEST_DENE_UTU2_PLA_3g_14m39s.gcode",
+    "appliedAt": 1794643599924
   }
 ]
