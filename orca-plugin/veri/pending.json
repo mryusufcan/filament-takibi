@@ -1152,5 +1152,35 @@
     "source": "send",
     "label": "Yazıcıya gönderim · Bag_Clip_V2_ABS_33g_1h31m.gcode",
     "appliedAt": 1795355358356
+  },
+  {
+    "id": "pee57ba0de6e1",
+    "t": 1795368415077,
+    "output": "Isimsiz-fins-0.4nozzle-0.2layer_ABS_18g_1h8m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.25fa-d482-d1d2-36ca",
+    "items": [
+      {
+        "grams": 18.2,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 18.2,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Isimsiz-fins-0.4nozzle-0.2layer_ABS_18g_1h8m.gcode",
+    "appliedAt": 1795368419574
   }
 ]
