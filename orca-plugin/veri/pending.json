@@ -1092,5 +1092,35 @@
     "source": "send",
     "label": "Yazıcıya gönderim · SUPPORT_TEST_DENE_AKIS09_PLA_3g_14m42s.gcode",
     "appliedAt": 1794647518060
+  },
+  {
+    "id": "p0f0cb837224e",
+    "t": 1795352589423,
+    "output": "Bag_Clip_V2_ABS_8g_25m27s.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.0d42-7099-f5d2-ab64",
+    "items": [
+      {
+        "grams": 8.2,
+        "material": "ABS",
+        "color": "#000000",
+        "preset": "ABS SİYAH",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ode6susqv",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ode6susqv",
+          "smul6c7r8k92x",
+          "smupt1ekan6js",
+          "smu9ocltcqcxc",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 8.2,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Bag_Clip_V2_ABS_8g_25m27s.gcode",
+    "appliedAt": 1795352590657
   }
 ]
