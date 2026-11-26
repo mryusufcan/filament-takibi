@@ -1182,5 +1182,35 @@
     "source": "send",
     "label": "Yazıcıya gönderim · Isimsiz-fins-0.4nozzle-0.2layer_ABS_18g_1h8m.gcode",
     "appliedAt": 1795368419574
+  },
+  {
+    "id": "p471327a54ea9",
+    "t": 1795684224822,
+    "output": "Support Mural D without holes_ABS_40g_1h45m.gcode",
+    "gcode": "C:\\Users\\yusuf\\AppData\\Local\\Temp\\.OrcaSlicer.upload.0d8e-b216-d8f3-3f9f",
+    "items": [
+      {
+        "grams": 40.1,
+        "material": "ABS",
+        "color": "#FFFFFF",
+        "preset": "ABS BEYAZ",
+        "vendor": "PORİMA",
+        "spoolId": "smu9ocltcqcxc",
+        "confidence": "high",
+        "presetMatch": true,
+        "candidates": [
+          "smu9ocltcqcxc",
+          "smu9nv64fb0wy",
+          "smu9nvtftp1uy",
+          "smu9ode6susqv",
+          "smul6ojbl6ie0"
+        ]
+      }
+    ],
+    "total": 40.1,
+    "status": "applied",
+    "source": "send",
+    "label": "Yazıcıya gönderim · Support Mural D without holes_ABS_40g_1h45m.gcode",
+    "appliedAt": 1795684235740
   }
 ]

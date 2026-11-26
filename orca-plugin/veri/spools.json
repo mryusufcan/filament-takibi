@@ -83,12 +83,19 @@
     "colorName": "BEYAZ",
     "colorHex": "#ffffff",
     "initial": 1000.0,
-    "remaining": 614.0,
+    "remaining": 573.9,
     "spoolWeight": 230.0,
     "price": 0,
     "note": "",
     "createdAt": 1789900546430,
-    "log": []
+    "log": [
+      {
+        "t": 1795684235711,
+        "k": "use",
+        "g": 40.1,
+        "r": 573.9
+      }
+    ]
   },
   {
     "id": "smu9ode6susqv",
